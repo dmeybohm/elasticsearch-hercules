@@ -1,0 +1,25 @@
+{
+  "name": "best/elasticsearch-hercules",
+  "description": "Elastichsearch query builder",
+  "minimum-stability": "dev",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "David Meybohm",
+      "email": "dmeybohm@gmail.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Best\\ElasticSearch\\Hercules\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Best\\ElasticSearch\\Hercules\\Test\\": "test/"
+    }
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^4"
+  }
+}
