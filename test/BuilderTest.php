@@ -42,7 +42,7 @@ class BuilderTest extends \PHPUnit\Framework\TestCase
         $builder->query(Query::match("field", "match phrase"));
         $this->assertEquals(['query' => ['match' => ['field' => 'match phrase']]], $builder->build());
 
-        $builder2 = Builder::create()
+        $result = Builder::create()
             ->query(
                 Query::match('field2', 'match phrase2')
                     ->cutoffFrequency(1.5)
@@ -50,7 +50,8 @@ class BuilderTest extends \PHPUnit\Framework\TestCase
                     ->fuzziness(Fuzziness::auto())
                     ->operator(Operator::_or_())
                     ->zeroTermsQuery(ZeroTermsQuery::all())
-            );
+            )
+            ->build();
 
         $expected = [
             'query' => [
@@ -65,7 +66,7 @@ class BuilderTest extends \PHPUnit\Framework\TestCase
                 ]
             ]
         ];
-        $this->assertEquals($expected, $builder2->build());
+        $this->assertEquals($expected, $result);
     }
 
     public function testCombiningQueries()
@@ -87,7 +88,7 @@ class BuilderTest extends \PHPUnit\Framework\TestCase
             ]
         ], $builder->build());
 
-        $builder = Builder::create()
+        $result = Builder::create()
            ->andQuery(
                Query::match('hello', 'goodbye'),
                Query::matchAll()
@@ -97,7 +98,8 @@ class BuilderTest extends \PHPUnit\Framework\TestCase
             )
             ->orQuery(
                 Query::term('term1', 'termValue')
-            );
+            )
+            ->build();
 
         $expected = [
             'query' => [
@@ -113,6 +115,6 @@ class BuilderTest extends \PHPUnit\Framework\TestCase
                 ]
             ]
         ];
-        $this->assertEquals($expected, $builder->build());
+        $this->assertEquals($expected, $result);
     }
 }
