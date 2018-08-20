@@ -6,124 +6,125 @@ use Best\ElasticSearch\Hercules\Type\Query;
 
 class Builder implements \JsonSerializable
 {
-    /**
-     * @var Query[]
-     */
-    protected $andQueries = [];
-
-    /**
-     * @var Query[]
-     */
-    protected $orQueries = [];
+	/**
+	 * @var Query[]
+	 */
+	protected $andQueries = [];
 
 	/**
 	 * @var Query[]
 	 */
-    protected $notQueries = [];
-
-    /**
-     * @var Filter[]
-     */
-    protected $filters = [];
+	protected $orQueries = [];
 
 	/**
-     * Create a new builder.
-     *
-     * @return static
-     */
-    public static function create()
-    {
-        return new static();
-    }
+	 * @var Query[]
+	 */
+	protected $notQueries = [];
 
-    /**
-     * Add a query to the builder.
-     *
-     * @param Query ...$queries
-     * @return static
-     */
-    public function query(Query ...$queries)
-    {
-        return $this->andQuery(...$queries);
-    }
+	/**
+	 * @var Filter[]
+	 */
+	protected $filters = [];
 
-    /**
-     * Add an "or" query.
-     *
-     * @param Query ...$queries
-     * @return static
-     */
-    public function orQuery(Query ...$queries)
-    {
-        $this->orQueries = array_merge($this->orQueries, $queries);
-        return $this;
-    }
+	/**
+	 * Create a new builder.
+	 *
+	 * @return static
+	 */
+	public static function create()
+	{
+		return new static();
+	}
 
-    /**
-     * Add an "and" query.
-     *
-     * @param Query ...$queries
-     * @return static
-     */
-    public function andQuery(Query ...$queries)
-    {
-        $this->andQueries = array_merge($this->andQueries, $queries);
-        return $this;
-    }
-    /**
-     * Add a "not" query.
-     *
-     * @param Query ...$queries
-     * @return static
-     */
-    public function notQuery(Query ...$queries)
-    {
-        $this->notQueries = array_merge($this->notQueries, $queries);
-        return $this;
-    }
+	/**
+	 * Add a query to the builder.
+	 *
+	 * @param Query ...$queries
+	 * @return static
+	 */
+	public function query(Query ...$queries)
+	{
+		return $this->andQuery(...$queries);
+	}
 
-    /**
-     * Build the JSON
-     *
-     * @return array
-     */
-    public function build()
-    {
-    	$andQueryCount = count($this->andQueries);
-    	$orQueryCount = count($this->orQueries);
-    	$filterCount = count($this->filters);
-    	$exclusionCount = count($this->notQueries);
+	/**
+	 * Add an "or" query.
+	 *
+	 * @param Query ...$queries
+	 * @return static
+	 */
+	public function orQuery(Query ...$queries)
+	{
+		$this->orQueries = array_merge($this->orQueries, $queries);
+		return $this;
+	}
 
-    	if ($andQueryCount === 1 && $orQueryCount === 0 && $filterCount === 0 && $exclusionCount === 0) {
-            return ['query' => $this->andQueries[0]->toArray()];
+	/**
+	 * Add an "and" query.
+	 *
+	 * @param Query ...$queries
+	 * @return static
+	 */
+	public function andQuery(Query ...$queries)
+	{
+		$this->andQueries = array_merge($this->andQueries, $queries);
+		return $this;
+	}
 
-        } elseif ($andQueryCount === 0 && $orQueryCount === 1 && $filterCount === 0 && $exclusionCount === 0) {
-    		return ['query' => $this->orQueries[0]->toArray()];
+	/**
+	 * Add a "not" query.
+	 *
+	 * @param Query ...$queries
+	 * @return static
+	 */
+	public function notQuery(Query ...$queries)
+	{
+		$this->notQueries = array_merge($this->notQueries, $queries);
+		return $this;
+	}
 
-	    } elseif (
-	        $filterCount === 1 &&
-            $andQueryCount === 0 &&
-            $orQueryCount == 0 &&
-            $exclusionCount === 0 &&
-            $orQueryCount == 0
-        ) {
-    	    // @todo
-            return [];
+	/**
+	 * Build the JSON
+	 *
+	 * @return array
+	 */
+	public function build()
+	{
+		$andQueryCount = count($this->andQueries);
+		$orQueryCount = count($this->orQueries);
+		$filterCount = count($this->filters);
+		$exclusionCount = count($this->notQueries);
 
-	    } else {
-    	    $result = ['query' => ['bool' => []]];
-    	    if ($this->andQueries) {
-    	        $result['query']['bool']['must'] = $this->serializeQueries($this->andQueries);
-            }
-            if ($this->orQueries) {
-    	        $result['query']['bool']['should'] = $this->serializeQueries($this->orQueries);
-            }
-            if ($this->notQueries) {
-                $result['query']['bool']['must_not'] = $this->serializeQueries($this->notQueries);
-            }
-    	    return $result;
-        }
-    }
+		if ($andQueryCount === 1 && $orQueryCount === 0 && $filterCount === 0 && $exclusionCount === 0) {
+			return ['query' => $this->andQueries[0]->toArray()];
+
+		} elseif ($andQueryCount === 0 && $orQueryCount === 1 && $filterCount === 0 && $exclusionCount === 0) {
+			return ['query' => $this->orQueries[0]->toArray()];
+
+		} elseif (
+			$filterCount === 1 &&
+			$andQueryCount === 0 &&
+			$orQueryCount == 0 &&
+			$exclusionCount === 0 &&
+			$orQueryCount == 0
+		) {
+			// @todo
+			return [];
+
+		} else {
+			$result = ['query' => ['bool' => []]];
+			if ($this->andQueries) {
+				$result['query']['bool']['must'] = $this->serializeQueries($this->andQueries);
+			}
+			if ($this->orQueries) {
+				$result['query']['bool']['should'] = $this->serializeQueries($this->orQueries);
+			}
+			if ($this->notQueries) {
+				$result['query']['bool']['must_not'] = $this->serializeQueries($this->notQueries);
+			}
+			return $result;
+		}
+	}
 
 	/**
 	 * @return array
@@ -133,18 +134,18 @@ class Builder implements \JsonSerializable
 		return $this->build();
 	}
 
-    /**
-     * Serialize the queries to an array.
-     *
-     * @param Query[] $queries
-     * @return array
-     */
-    private function serializeQueries(array $queries)
-    {
-        $result = [];
-        foreach ($queries as $query) {
-            $result[] = $query->toArray();
-        }
-        return $result;
-    }
+	/**
+	 * Serialize the queries to an array.
+	 *
+	 * @param Query[] $queries
+	 * @return array
+	 */
+	private function serializeQueries(array $queries)
+	{
+		$result = [];
+		foreach ($queries as $query) {
+			$result[] = $query->toArray();
+		}
+		return $result;
+	}
 }
