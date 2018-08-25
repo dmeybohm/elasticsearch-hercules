@@ -5,6 +5,16 @@ namespace Best\ElasticSearch\Hercules\Type;
 class MinimumShouldMatchCombination extends MinimumShouldMatch
 {
     /**
+     * @var MinimumShouldMatch
+     */
+    protected $percentageInstance;
+
+    /**
+     * @var MinimumShouldMatch
+     */
+    protected $numberOfTermsInstance;
+
+    /**
      * Create a new MinimumShouldMatchCombination
      *
      * @param int $numberOfTerms
@@ -24,7 +34,8 @@ class MinimumShouldMatchCombination extends MinimumShouldMatch
      */
     public function __toString()
     {
-        return sprintf("%d<%d%%", $this->numberOfTerms, $this->percentage);
+        return strval($this->numberOfTermsInstance) . '<' .
+            strval($this->percentageInstance);
     }
 
     /**
@@ -35,7 +46,7 @@ class MinimumShouldMatchCombination extends MinimumShouldMatch
      */
     protected function __construct($numberOfTerms, $percentage)
     {
-        $this->numberOfTerms = $numberOfTerms;
-        $this->percentage = $percentage;
+        $this->numberOfTermsInstance = MinimumShouldMatch::numberOfTerms($numberOfTerms);
+        $this->percentageInstance = MinimumShouldMatch::percentage($percentage);
     }
 }

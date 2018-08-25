@@ -71,7 +71,7 @@ class MinimumShouldMatch implements TypeInterface
     public function __toString()
     {
         if ($this->percentage !== null) {
-            return "{$this->percentage}%";
+            return strval($this->percentage);
         } elseif ($this->numberOfTerms !== null) {
             return strval($this->numberOfTerms);
         } else {
