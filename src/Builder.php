@@ -2,22 +2,22 @@
 
 namespace Best\ElasticSearch\Hercules;
 
-use Best\ElasticSearch\Hercules\Type\Query;
+use Best\ElasticSearch\Hercules\Type\QueryInterface;
 
 class Builder implements \JsonSerializable
 {
 	/**
-	 * @var Query[]
+	 * @var QueryInterface[]
 	 */
 	protected $andQueries = [];
 
 	/**
-	 * @var Query[]
+	 * @var QueryInterface[]
 	 */
 	protected $orQueries = [];
 
 	/**
-	 * @var Query[]
+	 * @var QueryInterface[]
 	 */
 	protected $notQueries = [];
 
@@ -39,10 +39,10 @@ class Builder implements \JsonSerializable
 	/**
 	 * Add a query to the builder.
 	 *
-	 * @param Query ...$queries
+	 * @param QueryInterface ...$queries
 	 * @return static
 	 */
-	public function query(Query ...$queries)
+	public function query(QueryInterface ...$queries)
 	{
 		return $this->andQuery(...$queries);
 	}
@@ -50,10 +50,10 @@ class Builder implements \JsonSerializable
 	/**
 	 * Add an "or" query.
 	 *
-	 * @param Query ...$queries
+	 * @param QueryInterface ...$queries
 	 * @return static
 	 */
-	public function orQuery(Query ...$queries)
+	public function orQuery(QueryInterface ...$queries)
 	{
 		$this->orQueries = array_merge($this->orQueries, $queries);
 		return $this;
@@ -62,10 +62,10 @@ class Builder implements \JsonSerializable
 	/**
 	 * Add an "and" query.
 	 *
-	 * @param Query ...$queries
+	 * @param QueryInterface ...$queries
 	 * @return static
 	 */
-	public function andQuery(Query ...$queries)
+	public function andQuery(QueryInterface ...$queries)
 	{
 		$this->andQueries = array_merge($this->andQueries, $queries);
 		return $this;
@@ -74,10 +74,10 @@ class Builder implements \JsonSerializable
 	/**
 	 * Add a "not" query.
 	 *
-	 * @param Query ...$queries
+	 * @param QueryInterface ...$queries
 	 * @return static
 	 */
-	public function notQuery(Query ...$queries)
+	public function notQuery(QueryInterface ...$queries)
 	{
 		$this->notQueries = array_merge($this->notQueries, $queries);
 		return $this;
@@ -105,8 +105,7 @@ class Builder implements \JsonSerializable
 			$filterCount === 1 &&
 			$andQueryCount === 0 &&
 			$orQueryCount == 0 &&
-			$exclusionCount === 0 &&
-			$orQueryCount == 0
+			$exclusionCount === 0
 		) {
 			// @todo
 			return [];
@@ -137,7 +136,7 @@ class Builder implements \JsonSerializable
 	/**
 	 * Serialize the queries to an array.
 	 *
-	 * @param Query[] $queries
+	 * @param QueryInterface[] $queries
 	 * @return array
 	 */
 	private function serializeQueries(array $queries)

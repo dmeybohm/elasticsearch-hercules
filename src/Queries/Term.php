@@ -2,9 +2,9 @@
 
 namespace Best\ElasticSearch\Hercules\Queries;
 
-use Best\ElasticSearch\Hercules\Type\Query;
+use Best\ElasticSearch\Hercules\Type\QueryInterface;
 
-class Term extends Query
+class Term implements QueryInterface
 {
     /**
      * @var string
@@ -37,7 +37,7 @@ class Term extends Query
      * Set the boost.
      *
      * @param float|null $boost
-     * @return Term
+     * @return static
      */
     public function boost($boost)
     {
@@ -69,6 +69,5 @@ class Term extends Query
             ];
         }
     }
-
 
 }

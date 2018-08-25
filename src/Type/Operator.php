@@ -2,14 +2,18 @@
 
 namespace Best\ElasticSearch\Hercules\Type;
 
-class Operator extends Base
+use Best\ElasticSearch\Hercules\Traits\StringableTrait;
+
+class Operator implements TypeInterface
 {
+    use StringableTrait;
+
     /**
      * Return an 'and' operator.
      *
      * @return static
      */
-    public static function _and_()
+    public static function logicalAnd()
     {
     	return new static('and');
     }
@@ -19,7 +23,7 @@ class Operator extends Base
      *
      * @return static
      */
-    public static function _or_()
+    public static function logicalOr()
     {
         return new static('or');
     }
