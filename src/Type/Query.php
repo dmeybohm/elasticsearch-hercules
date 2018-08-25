@@ -4,14 +4,14 @@ namespace Best\ElasticSearch\Hercules\Type;
 
 use Best\ElasticSearch\Hercules\Queries;
 
-abstract class Query
+class Query implements TypeInterface
 {
     /**
-     * Serialize the query to an array.
-     *
-     * @return array
+     * Query constructor.
      */
-    abstract public function toArray();
+    protected function __construct()
+    {
+    }
 
     /**
      * Build a match query.
@@ -56,6 +56,11 @@ abstract class Query
     {
         // @todo
         return new Queries\MatchPhrasePrefix();
+    }
+
+    public static function simpleQueryString($query)
+    {
+        return new Queries\SimpleQueryString($query);
     }
 
     /**

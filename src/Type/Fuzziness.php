@@ -2,7 +2,7 @@
 
 namespace Best\ElasticSearch\Hercules\Type;
 
-class Fuzziness
+class Fuzziness implements TypeInterface
 {
     protected $fuzziness;
 

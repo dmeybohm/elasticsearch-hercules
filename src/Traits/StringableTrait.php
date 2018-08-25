@@ -1,8 +1,8 @@
 <?php
 
-namespace Best\ElasticSearch\Hercules\Type;
+namespace Best\ElasticSearch\Hercules\Traits;
 
-class Base
+trait StringableTrait
 {
 	/**
 	 * @var string
@@ -16,15 +16,15 @@ class Base
 	 */
 	protected function __construct($type)
 	{
-		$this->type = $type;
+		$this->type = strval($type);
 	}
 
 	/**
-	 * Get the type.
+	 * Convert the object to a string.
 	 *
 	 * @return string
 	 */
-	public function type()
+	public function __toString()
 	{
 		return $this->type;
 	}

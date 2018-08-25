@@ -2,9 +2,9 @@
 
 namespace Best\ElasticSearch\Hercules\Queries;
 
-use Best\ElasticSearch\Hercules\Type\Query;
+use Best\ElasticSearch\Hercules\Type\QueryInterface;
 
-class MatchNone extends Query
+class MatchNone implements QueryInterface
 {
     /**
      * Turn the query into an array.

@@ -2,9 +2,9 @@
 
 namespace Best\ElasticSearch\Hercules\Queries;
 
-use Best\ElasticSearch\Hercules\Type\Query;
+use Best\ElasticSearch\Hercules\Type\QueryInterface;
 
-class MultiMatch extends Query
+class MultiMatch implements QueryInterface
 {
     public function toArray()
     {

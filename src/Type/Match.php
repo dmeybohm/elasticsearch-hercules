@@ -2,8 +2,12 @@
 
 namespace Best\ElasticSearch\Hercules\Type;
 
-class Match extends Base
+use Best\ElasticSearch\Hercules\Traits\StringableTrait;
+
+class Match implements TypeInterface
 {
+    use StringableTrait;
+
 	/**
 	 * Get the 'all' match type.
 	 *

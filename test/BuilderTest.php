@@ -48,7 +48,7 @@ class BuilderTest extends \PHPUnit\Framework\TestCase
                     ->cutoffFrequency(1.5)
                     ->autoGenerateSynonymsPhraseQuery(false)
                     ->fuzziness(Fuzziness::auto())
-                    ->operator(Operator::_or_())
+                    ->operator(Operator::logicalOr())
                     ->zeroTermsQuery(ZeroTermsQuery::all())
             )
             ->build();
@@ -117,4 +117,44 @@ class BuilderTest extends \PHPUnit\Framework\TestCase
         ];
         $this->assertEquals($expected, $result);
     }
+
+    public function testBuilderCanBeSerializedToJson()
+    {
+        $builder = Builder::create()
+            ->andQuery(
+                Query::match('hello', 'goodbye'),
+                Query::matchAll()
+            )
+            ->orQuery(
+                Query::match('foo', 'bar')
+            )
+            ->orQuery(
+                Query::term('term1', 'termValue')
+            );
+
+        $expected = json_encode([
+            'query' => [
+                'bool' => [
+                    'must' => [
+                        ['match' => ['hello' => 'goodbye']],
+                        ['match_all' => []],
+                    ],
+                    'should' => [
+                        ['match' => ['foo' => 'bar']],
+                        ['term' => ['term1' => 'termValue']],
+                    ]
+                ]
+            ]
+        ]);
+        $this->assertEquals($expected, json_encode($builder));
+    }
+
+    public function testSimpleQuery()
+    {
+        $result = Builder::create()
+            ->query(Query::simpleQueryString('hello query string'))
+            ->build();
+        $this->assertEquals(['query' => ['simple_query_string' => ['query' => 'hello query string']]], $result);
+    }
+
 }

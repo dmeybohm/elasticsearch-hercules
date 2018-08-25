@@ -2,9 +2,9 @@
 
 namespace Best\ElasticSearch\Hercules\Queries;
 
-use Best\ElasticSearch\Hercules\Type\Query;
+use Best\ElasticSearch\Hercules\Type\QueryInterface;
 
-class MatchPhrasePrefix extends Query
+class MatchPhrasePrefix implements QueryInterface
 {
     /**
      * @var integer|null
@@ -13,12 +13,11 @@ class MatchPhrasePrefix extends Query
 
     /**
      * @param int|null $maxExpansions
-     * @return MatchPhrasePrefix
+     * @return static
      */
     public function maxExpansions($maxExpansions)
     {
         $this->maxExpansions = $maxExpansions;
-
         return $this;
     }
 

@@ -2,12 +2,12 @@
 
 namespace Best\ElasticSearch\Hercules\Queries;
 
-use Best\ElasticSearch\Hercules\Type\Query;
+use Best\ElasticSearch\Hercules\Type\QueryInterface;
 use Best\ElasticSearch\Hercules\Type\Fuzziness;
 use Best\ElasticSearch\Hercules\Type\Operator;
 use Best\ElasticSearch\Hercules\Type\ZeroTermsQuery;
 
-class Match extends Query
+class Match implements QueryInterface
 {
     /**
      * @type Fuzziness|null
@@ -134,10 +134,10 @@ class Match extends Query
                 $fields['cutoff_frequency'] = $this->cutoffFrequency;
             }
             if ($this->zeroTermsQuery !== null) {
-                $fields['zero_terms_query'] = $this->zeroTermsQuery->option();
+                $fields['zero_terms_query'] = strval($this->zeroTermsQuery);
             }
             if ($this->operator !== null) {
-                $fields['operator'] = $this->operator->type();
+                $fields['operator'] = strval($this->operator);
             }
 
             return [
