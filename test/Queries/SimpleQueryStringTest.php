@@ -3,6 +3,7 @@
 namespace Best\Test\ElasticSearch\Hercules\Queries;
 
 use Best\ElasticSearch\Hercules\Queries\SimpleQueryString;
+use Best\ElasticSearch\Hercules\Type\Analyzer;
 use Best\ElasticSearch\Hercules\Type\Flags;
 use Best\ElasticSearch\Hercules\Type\MinimumShouldMatch;
 use Best\ElasticSearch\Hercules\Type\MinimumShouldMatchCombination;
@@ -36,6 +37,7 @@ class SimpleQueryStringTest extends \PHPUnit\Framework\TestCase
             ->fields('hello', 'goodbye')
             ->lowercaseExpandedTerms(true)
             ->locale('utf-8')
+            ->analyzer(Analyzer::standard())
             ->defaultOperator(Operator::logicalAnd())
             ->analyzeWildcard(true)
             ->toArray();
@@ -47,6 +49,7 @@ class SimpleQueryStringTest extends \PHPUnit\Framework\TestCase
                 'fields' => ['hello', 'goodbye'],
                 'lowercase_expanded_terms' => true,
                 'default_operator' => 'and',
+                'analyzer' => 'standard',
                 'analyze_wildcard' => true,
                 'locale' => 'utf-8',
                 'minimum_should_match' => '50%'
@@ -65,4 +68,5 @@ class SimpleQueryStringTest extends \PHPUnit\Framework\TestCase
     {
         $this->assertNotNull(new SimpleQueryString('test'));
     }
+
 }

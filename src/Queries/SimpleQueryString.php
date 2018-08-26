@@ -191,5 +191,16 @@ class SimpleQueryString implements QueryInterface
         return $this;
     }
 
+    /**
+     * Set the analyzer.
+     *
+     * @param Analyzer|null $analyzer
+     * @return static
+     */
+    public function analyzer(Analyzer $analyzer)
+    {
+        $this->analyzer = $analyzer;
+        return $this;
+    }
 
 }

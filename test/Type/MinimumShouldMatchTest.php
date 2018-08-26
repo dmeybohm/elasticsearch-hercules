@@ -8,7 +8,7 @@ use Best\ElasticSearch\Hercules\Type\MinimumShouldMatchMultipleCombination;
 
 class MinimumShouldMatchTest extends \PHPUnit\Framework\TestCase
 {
-    public function testNumerOfTerms()
+    public function testNumberOfTerms()
     {
         $msm = MinimumShouldMatch::numberOfTerms(10);
         $this->assertSame('10', strval($msm));
