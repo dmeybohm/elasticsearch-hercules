@@ -4,7 +4,7 @@ namespace Best\ElasticSearch\Hercules\Test\Type;
 
 use Best\ElasticSearch\Hercules\Type\MinimumShouldMatch;
 use Best\ElasticSearch\Hercules\Type\MinimumShouldMatchCombination;
-use Best\ElasticSearch\Hercules\Type\MinimumShouldMatchMultipleCombination;
+use Best\ElasticSearch\Hercules\Type\MinimumShouldMatchMultipleCombinations;
 
 class MinimumShouldMatchTest extends \PHPUnit\Framework\TestCase
 {
@@ -30,7 +30,7 @@ class MinimumShouldMatchTest extends \PHPUnit\Framework\TestCase
 
     public function testMultipleCombinations()
     {
-        $this->assertInstanceOf(MinimumShouldMatchMultipleCombination::class,
+        $this->assertInstanceOf(MinimumShouldMatchMultipleCombinations::class,
             MinimumShouldMatch::multipleCombinations(
                 MinimumShouldMatch::combination(1, 50)
             )

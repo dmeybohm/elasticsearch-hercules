@@ -62,11 +62,11 @@ class MinimumShouldMatch implements TypeInterface
      *
      * @param MinimumShouldMatchCombination ...$combinations
      *
-     * @return MinimumShouldMatchMultipleCombination
+     * @return MinimumShouldMatchMultipleCombinations
      */
     public static function multipleCombinations(MinimumShouldMatchCombination ...$combinations)
     {
-        return MinimumShouldMatchMultipleCombination::create(...$combinations);
+        return MinimumShouldMatchMultipleCombinations::create(...$combinations);
     }
 
     /**

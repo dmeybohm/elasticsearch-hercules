@@ -2,7 +2,7 @@
 
 namespace Best\ElasticSearch\Hercules\Type;
 
-class MinimumShouldMatchMultipleCombination extends MinimumShouldMatch
+class MinimumShouldMatchMultipleCombinations extends MinimumShouldMatch
 {
     /**
      * @var MinimumShouldMatchCombination[]
