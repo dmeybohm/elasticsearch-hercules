@@ -122,13 +122,13 @@ class SimpleQueryString implements QueryInterface
             $result['flags'] = strval($this->flags);
         }
         if ($this->fields) {
-            $result['fields'] = implode(',', $this->fields);
+            $result['fields'] = $this->fields;
         }
         if ($this->lowercaseExpandedTerms !== null) {
             $result['lowercase_expanded_terms'] = $this->lowercaseExpandedTerms;
         }
         if ($this->defaultOperator !== null) {
-            $result['default_operator'] = $this->defaultOperator;
+            $result['default_operator'] = strval($this->defaultOperator);
         }
         if ($this->analyzer !== null) {
             $result['analyzer'] = strval($this->analyzer);
@@ -168,6 +168,8 @@ class SimpleQueryString implements QueryInterface
     }
 
     /**
+     * Set the minimumShouldMatch.
+     *
      * @param MinimumShouldMatch $minimumShouldMatch
      * @return static
      */
@@ -176,4 +178,29 @@ class SimpleQueryString implements QueryInterface
         $this->minimumShouldMatch = $minimumShouldMatch;
         return $this;
     }
+
+    /**
+     * Set the locale.
+     *
+     * @param string|null $locale
+     * @return static
+     */
+    public function locale($locale)
+    {
+        $this->locale = strval($locale);
+        return $this;
+    }
+
+    /**
+     * Set the analyzer.
+     *
+     * @param Analyzer|null $analyzer
+     * @return static
+     */
+    public function analyzer(Analyzer $analyzer)
+    {
+        $this->analyzer = $analyzer;
+        return $this;
+    }
+
 }

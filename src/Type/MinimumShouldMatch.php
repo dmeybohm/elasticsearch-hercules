@@ -34,7 +34,13 @@ class MinimumShouldMatch implements TypeInterface
     public static function percentage($percentage)
     {
         $result = new static();
+        if (!is_numeric($percentage)) {
+            throw new \InvalidArgumentException("Percentage must be between 0 and 100; got '{$result->percentage}'");
+        }
         $result->percentage = floatval($percentage);
+        if ($result->percentage < -100.0 || $result->percentage > 100.0) {
+            throw new \InvalidArgumentException("Percentage must be between 0 and 100; got '{$result->percentage}'");
+        }
         return $result;
     }
 
@@ -56,11 +62,11 @@ class MinimumShouldMatch implements TypeInterface
      *
      * @param MinimumShouldMatchCombination ...$combinations
      *
-     * @return MinimumShouldMatchMultipleCombination
+     * @return MinimumShouldMatchMultipleCombinations
      */
     public static function multipleCombinations(MinimumShouldMatchCombination ...$combinations)
     {
-        return MinimumShouldMatchMultipleCombination::create(...$combinations);
+        return MinimumShouldMatchMultipleCombinations::create(...$combinations);
     }
 
     /**
