@@ -10,7 +10,7 @@ use Best\ElasticSearch\Hercules\Type\ZeroTermsQuery;
 class Match implements QueryInterface
 {
     /**
-     * @type Fuzziness|null
+     * @var Fuzziness|null
      */
     protected $fuzziness;
 

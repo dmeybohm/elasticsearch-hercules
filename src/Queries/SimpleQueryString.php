@@ -50,21 +50,21 @@ class SimpleQueryString implements QueryInterface
     /**
      * Whether to be lenient.
      *
-     * @var bool|null $lenient
+     * @var bool|null
      */
     protected $lenient;
 
     /**
      * The locale.
      *
-     * @var string|null $locale
+     * @var string|null
      */
     protected $locale;
 
     /**
      * Minimum should match.
      *
-     * @var MinimumShouldMatch $minimumShouldMatch
+     * @var MinimumShouldMatch
      */
     protected $minimumShouldMatch;
 
