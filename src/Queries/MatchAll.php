@@ -19,6 +19,9 @@ class MatchAll implements QueryInterface
      */
     public function boost($score)
     {
+		if (!is_numeric($score)) {
+			throw new \InvalidArgumentException("Invalid boost score: '$score'");
+		}
         $this->score = floatval($score);
         return $this;
     }
