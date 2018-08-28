@@ -46,6 +46,17 @@ class Query implements TypeInterface
         return new Queries\MatchNone();
     }
 
+    /**
+     * Build a new multimatch query.
+     *
+     * @param string $query
+     * @return Queries\MultiMatch
+     */
+    public static function multiMatch($query)
+    {
+        return new Queries\MultiMatch($query);
+    }
+
     public static function matchPhrase()
     {
         // @todo
