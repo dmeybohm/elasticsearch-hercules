@@ -4,7 +4,7 @@ namespace Best\ElasticSearch\Hercules\Type;
 
 use Best\ElasticSearch\Hercules\Traits\StringableTrait;
 
-class MultiMatchType
+class MultiMatchType implements TypeInterface
 {
     use StringableTrait;
     
