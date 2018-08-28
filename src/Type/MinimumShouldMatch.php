@@ -2,6 +2,8 @@
 
 namespace Best\ElasticSearch\Hercules\Type;
 
+use Best\ElasticSearch\Hercules\Convert;
+
 class MinimumShouldMatch implements TypeInterface
 {
     /**
@@ -15,18 +17,20 @@ class MinimumShouldMatch implements TypeInterface
     protected $percentage;
 
     /**
+     * Create a new MinimumShouldMatch with the number of terms.
+     *
      * @param integer $integer
      * @return static
      */
     public static function numberOfTerms($integer)
     {
         $result = new static();
-        $result->numberOfTerms = intval($integer);
+        $result->numberOfTerms = Convert::toInteger($integer);
         return $result;
     }
 
     /**
-     * Create a new MinimumShouldMatch on percentage
+     * Create a new MinimumShouldMatch on percentage.
      *
      * @var float $percentage A float value between 0 and 100.
      * @return static
@@ -34,12 +38,10 @@ class MinimumShouldMatch implements TypeInterface
     public static function percentage($percentage)
     {
         $result = new static();
-        if (!is_numeric($percentage)) {
-            throw new \InvalidArgumentException("Percentage must be between 0 and 100; got '{$result->percentage}'");
-        }
-        $result->percentage = floatval($percentage);
+        $errorMessage = "Percentage must be between -100 and 100; got '{percentage}'";
+        $result->percentage = Convert::toFloat($percentage);
         if ($result->percentage < -100.0 || $result->percentage > 100.0) {
-            throw new \InvalidArgumentException("Percentage must be between 0 and 100; got '{$result->percentage}'");
+            throw new \InvalidArgumentException($errorMessage);
         }
         return $result;
     }
@@ -78,8 +80,10 @@ class MinimumShouldMatch implements TypeInterface
     {
         if ($this->percentage !== null) {
             return strval($this->percentage) . '%';
+
         } elseif ($this->numberOfTerms !== null) {
             return strval($this->numberOfTerms);
+
         } else {
             throw new \RuntimeException("Invalid type of MinimumShouldMatch");
         }
