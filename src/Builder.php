@@ -2,7 +2,7 @@
 
 namespace Best\ElasticSearch\Hercules;
 
-use Best\ElasticSearch\Hercules\Type\QueryInterface;
+use Best\ElasticSearch\Hercules\TypeInterfaces\QueryInterface;
 
 class Builder implements \JsonSerializable
 {
@@ -96,10 +96,10 @@ class Builder implements \JsonSerializable
 		$exclusionCount = count($this->notQueries);
 
 		if ($andQueryCount === 1 && $orQueryCount === 0 && $filterCount === 0 && $exclusionCount === 0) {
-			return ['query' => $this->andQueries[0]->toArray()];
+			return ['query' => $this->andQueries[0]->toValue()];
 
 		} elseif ($andQueryCount === 0 && $orQueryCount === 1 && $filterCount === 0 && $exclusionCount === 0) {
-			return ['query' => $this->orQueries[0]->toArray()];
+			return ['query' => $this->orQueries[0]->toValue()];
 
 		} elseif (
 			$filterCount === 1 &&
@@ -143,7 +143,7 @@ class Builder implements \JsonSerializable
 	{
 		$result = [];
 		foreach ($queries as $query) {
-			$result[] = $query->toArray();
+			$result[] = $query->toValue();
 		}
 		return $result;
 	}

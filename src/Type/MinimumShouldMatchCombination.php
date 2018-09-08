@@ -2,17 +2,19 @@
 
 namespace Best\ElasticSearch\Hercules\Type;
 
-class MinimumShouldMatchCombination extends MinimumShouldMatch
+use Best\ElasticSearch\Hercules\TypeInterfaces\MinimumShouldMatchCombinationInterface;
+
+class MinimumShouldMatchCombination implements MinimumShouldMatchCombinationInterface
 {
     /**
      * @var MinimumShouldMatch
      */
-    protected $percentageInstance;
+    private $percentage;
 
     /**
      * @var MinimumShouldMatch
      */
-    protected $numberOfTermsInstance;
+    private $numberOfTerms;
 
     /**
      * Create a new MinimumShouldMatchCombination
@@ -32,10 +34,10 @@ class MinimumShouldMatchCombination extends MinimumShouldMatch
      *
      * @return string
      */
-    public function __toString()
+    public function toValue()
     {
-        return strval($this->numberOfTermsInstance) . '<' .
-            strval($this->percentageInstance);
+        return $this->numberOfTerms->toValue() . '<' .
+            $this->percentage->toValue();
     }
 
     /**
@@ -44,9 +46,9 @@ class MinimumShouldMatchCombination extends MinimumShouldMatch
      * @param int $numberOfTerms
      * @param float $percentage
      */
-    protected function __construct($numberOfTerms, $percentage)
+    private function __construct($numberOfTerms, $percentage)
     {
-        $this->numberOfTermsInstance = MinimumShouldMatch::numberOfTerms($numberOfTerms);
-        $this->percentageInstance = MinimumShouldMatch::percentage($percentage);
+        $this->numberOfTerms = MinimumShouldMatch::numberOfTerms($numberOfTerms);
+        $this->percentage = MinimumShouldMatch::percentage($percentage);
     }
 }

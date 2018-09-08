@@ -3,18 +3,21 @@
 namespace Best\ElasticSearch\Hercules\Type;
 
 use Best\ElasticSearch\Hercules\Convert;
+use Best\ElasticSearch\Hercules\TypeInterfaces\MinimumShouldMatchCombinationInterface;
+use Best\ElasticSearch\Hercules\TypeInterfaces\MinimumShouldMatchInterface;
+use Best\ElasticSearch\Hercules\TypeInterfaces\MinimumShouldMatchMultipleCombinationsInterface;
 
-class MinimumShouldMatch implements TypeInterface
+class MinimumShouldMatch implements MinimumShouldMatchInterface
 {
     /**
      * @var int|null
      */
-    protected $numberOfTerms = null;
+    private $numberOfTerms = null;
 
     /**
      * @var float|null
      */
-    protected $percentage;
+    private $percentage;
 
     /**
      * Create a new MinimumShouldMatch with the number of terms.
@@ -62,11 +65,11 @@ class MinimumShouldMatch implements TypeInterface
     /**
      * Create a new MinimumShouldMatchMultipleCombination of MinimumShouldMatchCombination.
      *
-     * @param MinimumShouldMatchCombination ...$combinations
+     * @param MinimumShouldMatchCombinationInterface ...$combinations
      *
-     * @return MinimumShouldMatchMultipleCombinations
+     * @return MinimumShouldMatchMultipleCombinationsInterface
      */
-    public static function multipleCombinations(MinimumShouldMatchCombination ...$combinations)
+    public static function multipleCombinations(MinimumShouldMatchCombinationInterface ...$combinations)
     {
         return MinimumShouldMatchMultipleCombinations::create(...$combinations);
     }
@@ -76,7 +79,7 @@ class MinimumShouldMatch implements TypeInterface
      *
      * @return string
      */
-    public function __toString()
+    public function toValue()
     {
         if ($this->percentage !== null) {
             return strval($this->percentage) . '%';
@@ -92,7 +95,7 @@ class MinimumShouldMatch implements TypeInterface
     /**
      * MinimumShouldMatch constructor.
      */
-    protected function __construct()
+    private function __construct()
     {
     }
 }

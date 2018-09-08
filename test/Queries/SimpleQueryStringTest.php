@@ -24,7 +24,7 @@ class SimpleQueryStringTest extends \PHPUnit\Framework\TestCase
                 'minimum_should_match' => '1<2% 4<50%'
             ]
         ];
-        $this->assertEquals($expected, $query->toArray());
+        $this->assertEquals($expected, $query->toValue());
     }
 
 
@@ -40,7 +40,7 @@ class SimpleQueryStringTest extends \PHPUnit\Framework\TestCase
             ->analyzer(Analyzer::standard())
             ->defaultOperator(Operator::logicalAnd())
             ->analyzeWildcard(true)
-            ->toArray();
+            ->toValue();
 
         $expected = [
             'simple_query_string' => [
@@ -61,7 +61,7 @@ class SimpleQueryStringTest extends \PHPUnit\Framework\TestCase
     public function testToArray()
     {
         $query = new SimpleQueryString('querytest');
-        $this->assertEquals(['simple_query_string' => ['query' => 'querytest']], $query->toArray());
+        $this->assertEquals(['simple_query_string' => ['query' => 'querytest']], $query->toValue());
     }
 
     public function testConstruct()

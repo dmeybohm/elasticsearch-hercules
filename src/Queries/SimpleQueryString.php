@@ -2,79 +2,79 @@
 
 namespace Best\ElasticSearch\Hercules\Queries;
 
-use Best\ElasticSearch\Hercules\Type\Analyzer;
-use Best\ElasticSearch\Hercules\Type\Flags;
-use Best\ElasticSearch\Hercules\Type\MinimumShouldMatch;
-use Best\ElasticSearch\Hercules\Type\Operator;
-use Best\ElasticSearch\Hercules\Type\QueryInterface;
+use Best\ElasticSearch\Hercules\TypeInterfaces\MinimumShouldMatchInterface;
+use Best\ElasticSearch\Hercules\TypeInterfaces\OperatorInterface;
+use Best\ElasticSearch\Hercules\TypeInterfaces\AnalyzerInterface;
+use Best\ElasticSearch\Hercules\TypeInterfaces\QueryInterface;
+use Best\ElasticSearch\Hercules\TypeInterfaces\FlagsInterface;
 
-class SimpleQueryString implements QueryInterface
+final class SimpleQueryString implements QueryInterface
 {
     /**
      * @var string
      */
-    protected $query;
+    private $query;
 
     /**
-     * @var Flags
+     * @var \Best\ElasticSearch\Hercules\TypeInterfaces\FlagsInterface
      */
-    protected $flags;
+    private $flags;
 
     /**
      * @var string[]
      */
-    protected $fields = [];
+    private $fields = [];
 
     /**
      * @var bool|null
      */
-    protected $lowercaseExpandedTerms = null;
+    private $lowercaseExpandedTerms = null;
 
     /**
-     * @var Operator|null
+     * @var OperatorInterface|null
      */
-    protected $defaultOperator = null;
+    private $defaultOperator = null;
 
     /**
-     * @var Analyzer|null
+     * @var AnalyzerInterface|null
      */
-    protected $analyzer;
+    private $analyzer;
 
     /**
      * Whether the terms of prefix queries will be automatically analyzed.
      *
      * @var bool|null
      */
-    protected $analyzeWildcard;
+    private $analyzeWildcard;
 
     /**
      * Whether to be lenient.
      *
      * @var bool|null
      */
-    protected $lenient;
+    private $lenient;
 
     /**
      * The locale.
      *
      * @var string|null
      */
-    protected $locale;
+    private $locale;
 
     /**
      * Minimum should match.
      *
-     * @var MinimumShouldMatch
+     * @var MinimumShouldMatchInterface $minimumShouldMatch
      */
-    protected $minimumShouldMatch;
+    private $minimumShouldMatch;
 
     /**
      * Set the flags.
      *
-     * @param Flags $flags
+     * @param FlagsInterface $flags
      * @return static
      */
-    public function flags(Flags $flags)
+    public function flags(FlagsInterface $flags)
     {
         $this->flags = $flags;
         return $this;
@@ -115,11 +115,11 @@ class SimpleQueryString implements QueryInterface
      *
      * @return array
      */
-    public function toArray()
+    public function toValue()
     {
         $result = ['query' => $this->query];
         if ($this->flags !== null) {
-            $result['flags'] = strval($this->flags);
+            $result['flags'] = $this->flags->toValue();
         }
         if ($this->fields) {
             $result['fields'] = $this->fields;
@@ -128,13 +128,13 @@ class SimpleQueryString implements QueryInterface
             $result['lowercase_expanded_terms'] = $this->lowercaseExpandedTerms;
         }
         if ($this->defaultOperator !== null) {
-            $result['default_operator'] = strval($this->defaultOperator);
+            $result['default_operator'] = $this->defaultOperator->toValue();
         }
         if ($this->analyzer !== null) {
-            $result['analyzer'] = strval($this->analyzer);
+            $result['analyzer'] = $this->analyzer->toValue();
         }
         if ($this->minimumShouldMatch !== null) {
-            $result['minimum_should_match'] = strval($this->minimumShouldMatch);
+            $result['minimum_should_match'] = $this->minimumShouldMatch->toValue();
         }
         if ($this->locale !== null) {
             $result['locale'] = $this->locale;
@@ -142,14 +142,17 @@ class SimpleQueryString implements QueryInterface
         if ($this->analyzeWildcard !== null) {
             $result['analyze_wildcard'] = $this->analyzeWildcard;
         }
+        if ($this->lenient !== null) {
+            $result['lenient'] = $this->lenient;
+        }
         return ['simple_query_string' => $result];
     }
 
     /**
-     * @param Operator|null $defaultOperator
+     * @param OperatorInterface|null $defaultOperator
      * @return SimpleQueryString
      */
-    public function defaultOperator(Operator $defaultOperator)
+    public function defaultOperator(OperatorInterface $defaultOperator)
     {
         $this->defaultOperator = $defaultOperator;
         return $this;
@@ -170,10 +173,10 @@ class SimpleQueryString implements QueryInterface
     /**
      * Set the minimumShouldMatch.
      *
-     * @param MinimumShouldMatch $minimumShouldMatch
+     * @param MinimumShouldMatchInterface $minimumShouldMatch
      * @return static
      */
-    public function minimumShouldMatch(MinimumShouldMatch $minimumShouldMatch)
+    public function minimumShouldMatch(MinimumShouldMatchInterface $minimumShouldMatch)
     {
         $this->minimumShouldMatch = $minimumShouldMatch;
         return $this;
@@ -194,12 +197,24 @@ class SimpleQueryString implements QueryInterface
     /**
      * Set the analyzer.
      *
-     * @param Analyzer|null $analyzer
+     * @param AnalyzerInterface|null $analyzer
      * @return static
      */
-    public function analyzer(Analyzer $analyzer)
+    public function analyzer(AnalyzerInterface $analyzer)
     {
         $this->analyzer = $analyzer;
+        return $this;
+    }
+
+    /**
+     * Set the lenient.
+     *
+     * @param bool|null $lenient
+     * @return static
+     */
+    public function lenient($lenient)
+    {
+        $this->lenient = $lenient === null ? null : boolval($lenient);
         return $this;
     }
 

@@ -4,22 +4,15 @@ namespace Best\ElasticSearch\Hercules\Type;
 
 use Best\ElasticSearch\Hercules\Queries;
 
-class Query implements TypeInterface
+abstract class Query
 {
-    /**
-     * Query constructor.
-     */
-    protected function __construct()
-    {
-    }
-
     /**
      * Build a match query.
      *
      * @param string $fieldToMatch
      * @param string $matchPhrase
 
-     * @return Queries\Match
+     * @return \Best\ElasticSearch\Hercules\Queries\Match
      */
     public static function match($fieldToMatch, $matchPhrase)
     {
@@ -29,7 +22,7 @@ class Query implements TypeInterface
     /**
      * Build a match all query.
      *
-     * @return Queries\MatchAll
+     * @return \Best\ElasticSearch\Hercules\Queries\MatchAll
      */
     public static function matchAll()
     {
@@ -39,7 +32,7 @@ class Query implements TypeInterface
     /**
      * Build a match none query.
      *
-     * @return Queries\MatchNone
+     * @return \Best\ElasticSearch\Hercules\Queries\MatchNone
      */
     public static function matchNone()
     {
@@ -50,7 +43,8 @@ class Query implements TypeInterface
      * Build a new multimatch query.
      *
      * @param string $query
-     * @return Queries\MultiMatch
+     *
+     * @return \Best\ElasticSearch\Hercules\Queries\MultiMatch
      */
     public static function multiMatch($query)
     {
@@ -69,19 +63,28 @@ class Query implements TypeInterface
         return new Queries\MatchPhrasePrefix();
     }
 
+    /**
+     * Build a new simple query string query.
+     *
+     * @param string $query
+     *
+     * @return \Best\ElasticSearch\Hercules\Queries\SimpleQueryString
+     */
     public static function simpleQueryString($query)
     {
         return new Queries\SimpleQueryString($query);
     }
 
     /**
+     * Build a new term query.
+     *
      * @param string $fieldToMatch
      * @param string $exactTerm
-     * @return Queries\Term
+     *
+     * @return \Best\ElasticSearch\Hercules\Queries\Term
      */
     public static function term($fieldToMatch, $exactTerm)
     {
         return new Queries\Term($fieldToMatch, $exactTerm);
     }
-
 }

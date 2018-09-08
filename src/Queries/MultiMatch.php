@@ -3,34 +3,34 @@
 namespace Best\ElasticSearch\Hercules\Queries;
 
 use Best\ElasticSearch\Hercules\Convert;
-use Best\ElasticSearch\Hercules\Type\MultiMatchType;
-use Best\ElasticSearch\Hercules\Type\QueryInterface;
+use Best\ElasticSearch\Hercules\TypeInterfaces\MultiMatchTypeInterface;
+use Best\ElasticSearch\Hercules\TypeInterfaces\QueryInterface;
 
-class MultiMatch implements QueryInterface
+final class MultiMatch implements QueryInterface
 {
     /**
      * @var string
      */
-    protected $query;
+    private $query;
 
     /**
      * Fields
      *
      * @var array $fields
      */
-    protected $fields;
+    private $fields;
 
     /**
      * Tie breaker
      *
      * @var float|null $tieBreaker
      */
-    protected $tieBreaker;
+    private $tieBreaker;
 
     /**
-     * @var MultiMatchType|null
+     * @var MultiMatchTypeInterface|null
      */
-    protected $type;
+    private $type;
 
     /**
      * MultiMatch constructor.
@@ -47,7 +47,7 @@ class MultiMatch implements QueryInterface
      *
      * @return array
      */
-    public function toArray()
+    public function toValue()
     {
         $result = [
             'query' => $this->query
@@ -56,7 +56,7 @@ class MultiMatch implements QueryInterface
             $result['tie_breaker'] = $this->tieBreaker;
         }
         if ($this->type !== null) {
-            $result['type'] = strval($this->type);
+            $result['type'] = $this->type->toValue();
         }
         if ($this->fields !== null) {
             $result['fields'] = $this->fields;
@@ -93,10 +93,10 @@ class MultiMatch implements QueryInterface
     /**
      * Set the type.
      *
-     * @param MultiMatchType|null $type
+     * @param MultiMatchTypeInterface|null $type
      * @return static
      */
-    public function type(MultiMatchType $type)
+    public function type(MultiMatchTypeInterface $type)
     {
         $this->type = $type;
         return $this;

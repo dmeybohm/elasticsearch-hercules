@@ -2,14 +2,21 @@
 
 namespace Best\ElasticSearch\Hercules\Type;
 
-class MinimumShouldMatchMultipleCombinations extends MinimumShouldMatch
+use Best\ElasticSearch\Hercules\TypeInterfaces\MinimumShouldMatchCombinationInterface;
+use Best\ElasticSearch\Hercules\TypeInterfaces\MinimumShouldMatchMultipleCombinationsInterface;
+
+class MinimumShouldMatchMultipleCombinations implements MinimumShouldMatchMultipleCombinationsInterface
 {
     /**
-     * @var MinimumShouldMatchCombination[]
+     * @var \Best\ElasticSearch\Hercules\TypeInterfaces\MinimumShouldMatchCombinationInterface[]
      */
-    protected $combinations;
+    private $combinations;
 
-    public static function create(MinimumShouldMatchCombination ...$combinations)
+    /**
+     * @param \Best\ElasticSearch\Hercules\TypeInterfaces\MinimumShouldMatchCombinationInterface ...$combinations
+     * @return \Best\ElasticSearch\Hercules\Type\MinimumShouldMatchMultipleCombinations
+     */
+    public static function create(MinimumShouldMatchCombinationInterface ...$combinations)
     {
         if (count($combinations) === 0) {
             throw new \InvalidArgumentException("Must supply at least one combination");
@@ -22,12 +29,12 @@ class MinimumShouldMatchMultipleCombinations extends MinimumShouldMatch
      *
      * @return string
      */
-    public function __toString()
+    public function toValue()
     {
         $result = "";
         $last = count($this->combinations) - 1;
         foreach ($this->combinations as $i => $combination) {
-            $result .= strval($combination);
+            $result .= $combination->toValue();
             if ($i < $last) {
                 $result .= ' ';
             }
@@ -35,7 +42,7 @@ class MinimumShouldMatchMultipleCombinations extends MinimumShouldMatch
         return $result;
     }
 
-    protected function __construct(MinimumShouldMatchCombination ...$combinations)
+    private function __construct(MinimumShouldMatchCombinationInterface ...$combinations)
     {
         $this->combinations = $combinations;
     }

@@ -11,13 +11,13 @@ class MinimumShouldMatchTest extends \PHPUnit\Framework\TestCase
     public function testNumberOfTerms()
     {
         $msm = MinimumShouldMatch::numberOfTerms(10);
-        $this->assertSame('10', strval($msm));
+        $this->assertSame('10', $msm->toValue());
     }
 
     public function testPercentage()
     {
         $msm = MinimumShouldMatch::percentage(100);
-        $this->assertSame('100%', strval($msm));
+        $this->assertSame('100%', $msm->toValue());
     }
 
     /**

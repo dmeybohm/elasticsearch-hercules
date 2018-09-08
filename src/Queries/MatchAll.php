@@ -2,14 +2,14 @@
 
 namespace Best\ElasticSearch\Hercules\Queries;
 
-use Best\ElasticSearch\Hercules\Type\QueryInterface;
+use Best\ElasticSearch\Hercules\TypeInterfaces\QueryInterface;
 
-class MatchAll implements QueryInterface
+final class MatchAll implements QueryInterface
 {
     /**
      * @param float $score
      */
-    protected $score = 1.0;
+    private $score = 1.0;
 
     /**
      * Set the boost.
@@ -31,7 +31,7 @@ class MatchAll implements QueryInterface
      *
      * @return array
      */
-    public function toArray()
+    public function toValue()
     {
         $options = ($this->score !== 1.0) ? ['boost' => $this->score] : [];
         return ['match_all' => $options];

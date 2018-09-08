@@ -2,12 +2,15 @@
 
 namespace Best\ElasticSearch\Hercules\Type;
 
-class Flags implements TypeInterface
+use Best\ElasticSearch\Hercules\TypeInterfaces\FlagsInterface;
+use Best\ElasticSearch\Hercules\TypeInterfaces\TypeInterface;
+
+class Flags implements TypeInterface, FlagsInterface
 {
     /**
      * @var boolean[]
      */
-    protected $flags;
+    private $flags;
 
     /**
      * Create a new Flags object.
@@ -96,7 +99,7 @@ class Flags implements TypeInterface
         return $this;
     }
 
-    public function __toString()
+    public function toValue()
     {
         return implode("|", array_keys($this->flags));
     }
@@ -106,7 +109,7 @@ class Flags implements TypeInterface
      *
      * @param $string
      */
-    protected function add($string)
+    private function add($string)
     {
         $this->flags[$string] = true;
     }

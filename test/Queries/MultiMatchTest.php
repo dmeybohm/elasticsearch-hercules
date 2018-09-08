@@ -13,7 +13,7 @@ class MultiMatchTest extends \PHPUnit\Framework\TestCase
         $result = $multiMatch->tieBreaker(5.0)
             ->fields(['cheese', 'blarg'])
             ->type(MultiMatchType::bestFields())
-            ->toArray();
+            ->toValue();
 
         $this->assertEquals([
             'multi_match' => [

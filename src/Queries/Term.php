@@ -2,24 +2,24 @@
 
 namespace Best\ElasticSearch\Hercules\Queries;
 
-use Best\ElasticSearch\Hercules\Type\QueryInterface;
+use Best\ElasticSearch\Hercules\TypeInterfaces\QueryInterface;
 
-class Term implements QueryInterface
+final class Term implements QueryInterface
 {
     /**
      * @var string
      */
-    protected $fieldToMatch;
+    private $fieldToMatch;
 
     /**
      * @var string
      */
-    protected $exactTerm;
+    private $exactTerm;
 
     /**
      * @var float|null
      */
-    protected $boost;
+    private $boost;
 
     /**
      * Term constructor.
@@ -50,7 +50,7 @@ class Term implements QueryInterface
      *
      * @return array
      */
-    public function toArray()
+    public function toValue()
     {
         if ($this->boost !== null) {
             return [

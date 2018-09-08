@@ -2,16 +2,16 @@
 
 namespace Best\ElasticSearch\Hercules\Queries;
 
-use Best\ElasticSearch\Hercules\Type\QueryInterface;
+use Best\ElasticSearch\Hercules\TypeInterfaces\QueryInterface;
 
-class MatchNone implements QueryInterface
+final class MatchNone implements QueryInterface
 {
     /**
      * Turn the query into an array.
      *
      * @return array
      */
-    public function toArray()
+    public function toValue()
     {
         return ['match_none' => []];
     }
