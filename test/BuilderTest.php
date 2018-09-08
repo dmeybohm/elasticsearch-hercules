@@ -158,4 +158,46 @@ class BuilderTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(['query' => ['simple_query_string' => ['query' => 'hello query string']]], $result);
     }
 
+    public function testNotQuery()
+    {
+        $builder = Builder::create()
+            ->andQuery(
+                Query::match('hello', 'goodbye'),
+                Query::matchAll()
+            )
+            ->orQuery(
+                Query::match('foo', 'bar')
+            )
+            ->orQuery(
+                Query::term('term1', 'termValue')
+            )
+            ->notQuery(
+                Query::term('notField1', 'notValue1')
+            )
+            ->notQuery(
+                Query::term('notField2', 'notValue2')
+            );
+
+        $expected = json_encode([
+            'query' => [
+                'bool' => [
+                    'must' => [
+                        ['match' => ['hello' => 'goodbye']],
+                        ['match_all' => []],
+                    ],
+                    'should' => [
+                        ['match' => ['foo' => 'bar']],
+                        ['term' => ['term1' => 'termValue']],
+                    ],
+                    'must_not' => [
+                        ['term' => ['notField1' => 'notValue1']],
+                        ['term' => ['notField2' => 'notValue2']],
+                    ]
+                ]
+            ]
+        ]);
+        $this->assertEquals($expected, json_encode($builder));
+    }
+
+
 }
