@@ -4,6 +4,11 @@ namespace Best\ElasticSearch\Hercules\Type;
 
 use Best\ElasticSearch\Hercules\Queries;
 
+/**
+ * This class is not meant to be extended.
+ *
+ * It is just a convenience class container for static factory methods for creating queries.
+ */
 abstract class Query
 {
     /**
