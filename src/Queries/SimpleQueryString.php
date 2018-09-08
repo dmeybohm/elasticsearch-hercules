@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Best\ElasticSearch\Hercules\Queries;
 
@@ -71,10 +71,10 @@ final class SimpleQueryString implements QueryInterface
     /**
      * Set the flags.
      *
-     * @param FlagsInterface $flags
+     * @param FlagsInterface|null $flags
      * @return static
      */
-    public function flags(FlagsInterface $flags)
+    public function flags(?FlagsInterface $flags)
     {
         $this->flags = $flags;
         return $this;
@@ -85,16 +85,16 @@ final class SimpleQueryString implements QueryInterface
      *
      * @param string $query
      */
-    public function __construct($query)
+    public function __construct(string $query)
     {
-       $this->query = strval($query);
+       $this->query = $query;
     }
 
     /**
      * @param string[] $fields
      * @return static
      */
-    public function fields(...$fields)
+    public function fields(string ...$fields)
     {
         $this->fields = array_map('strval', $fields);
         return $this;
@@ -104,9 +104,9 @@ final class SimpleQueryString implements QueryInterface
      * @param bool|null $lowercaseExpandedTerms
      * @return static
      */
-    public function lowercaseExpandedTerms($lowercaseExpandedTerms)
+    public function lowercaseExpandedTerms(?bool $lowercaseExpandedTerms)
     {
-        $this->lowercaseExpandedTerms = boolval($lowercaseExpandedTerms);
+        $this->lowercaseExpandedTerms = $lowercaseExpandedTerms;
         return $this;
     }
 
@@ -152,7 +152,7 @@ final class SimpleQueryString implements QueryInterface
      * @param OperatorInterface|null $defaultOperator
      * @return SimpleQueryString
      */
-    public function defaultOperator(OperatorInterface $defaultOperator)
+    public function defaultOperator(?OperatorInterface $defaultOperator)
     {
         $this->defaultOperator = $defaultOperator;
         return $this;
@@ -164,19 +164,19 @@ final class SimpleQueryString implements QueryInterface
      * @param bool|null $analyzeWildcard
      * @return static
      */
-    public function analyzeWildcard($analyzeWildcard)
+    public function analyzeWildcard(?bool $analyzeWildcard)
     {
-        $this->analyzeWildcard = boolval($analyzeWildcard);
+        $this->analyzeWildcard = $analyzeWildcard;
         return $this;
     }
 
     /**
      * Set the minimumShouldMatch.
      *
-     * @param MinimumShouldMatchInterface $minimumShouldMatch
+     * @param MinimumShouldMatchInterface|null $minimumShouldMatch
      * @return static
      */
-    public function minimumShouldMatch(MinimumShouldMatchInterface $minimumShouldMatch)
+    public function minimumShouldMatch(?MinimumShouldMatchInterface $minimumShouldMatch)
     {
         $this->minimumShouldMatch = $minimumShouldMatch;
         return $this;
@@ -188,9 +188,9 @@ final class SimpleQueryString implements QueryInterface
      * @param string|null $locale
      * @return static
      */
-    public function locale($locale)
+    public function locale(?string $locale)
     {
-        $this->locale = strval($locale);
+        $this->locale = $locale;
         return $this;
     }
 
@@ -200,7 +200,7 @@ final class SimpleQueryString implements QueryInterface
      * @param AnalyzerInterface|null $analyzer
      * @return static
      */
-    public function analyzer(AnalyzerInterface $analyzer)
+    public function analyzer(?AnalyzerInterface $analyzer): self
     {
         $this->analyzer = $analyzer;
         return $this;
@@ -212,9 +212,9 @@ final class SimpleQueryString implements QueryInterface
      * @param bool|null $lenient
      * @return static
      */
-    public function lenient($lenient)
+    public function lenient(?bool $lenient): self
     {
-        $this->lenient = $lenient === null ? null : boolval($lenient);
+        $this->lenient = $lenient;
         return $this;
     }
 

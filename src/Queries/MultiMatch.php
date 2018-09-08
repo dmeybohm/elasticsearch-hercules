@@ -1,8 +1,7 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Best\ElasticSearch\Hercules\Queries;
 
-use Best\ElasticSearch\Hercules\Convert;
 use Best\ElasticSearch\Hercules\TypeInterfaces\MultiMatchTypeInterface;
 use Best\ElasticSearch\Hercules\TypeInterfaces\QueryInterface;
 
@@ -37,7 +36,7 @@ final class MultiMatch implements QueryInterface
      *
      * @param string $query
      */
-    public function __construct($query)
+    public function __construct(string $query)
     {
         $this->query = $query;
     }
@@ -84,9 +83,9 @@ final class MultiMatch implements QueryInterface
      * @param float|null $tieBreaker
      * @return static
      */
-    public function tieBreaker($tieBreaker)
+    public function tieBreaker(?float $tieBreaker)
     {
-        $this->tieBreaker = Convert::toFloat($tieBreaker);
+        $this->tieBreaker = $tieBreaker;
         return $this;
     }
 
@@ -96,7 +95,7 @@ final class MultiMatch implements QueryInterface
      * @param MultiMatchTypeInterface|null $type
      * @return static
      */
-    public function type(MultiMatchTypeInterface $type)
+    public function type(?MultiMatchTypeInterface $type)
     {
         $this->type = $type;
         return $this;

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Best\ElasticSearch\Hercules\Queries;
 
@@ -50,7 +50,7 @@ final class Match implements QueryInterface
      * @param string $fieldToMatch
      * @param string $matchPhrase
      */
-    public function __construct($fieldToMatch, $matchPhrase)
+    public function __construct(string $fieldToMatch, string $matchPhrase)
     {
         $this->fieldToMatch = strval($fieldToMatch);
         $this->matchPhrase = strval($matchPhrase);
@@ -62,7 +62,7 @@ final class Match implements QueryInterface
      * @param \Best\ElasticSearch\Hercules\TypeInterfaces\FuzzinessInterface $fuzziness
      * @return static
      */
-    public function fuzziness(FuzzinessInterface $fuzziness)
+    public function fuzziness(FuzzinessInterface $fuzziness): self
     {
         $this->fuzziness = $fuzziness;
         return $this;
@@ -74,7 +74,7 @@ final class Match implements QueryInterface
      * @param OperatorInterface $operator
      * @return $this
      */
-    public function operator(OperatorInterface $operator)
+    public function operator(OperatorInterface $operator): self
     {
         $this->operator = $operator;
         return $this;
@@ -86,7 +86,7 @@ final class Match implements QueryInterface
      * @param ZeroTermsQueryInterface $zeroTermsQuery
      * @return $this
      */
-    public function zeroTermsQuery(ZeroTermsQueryInterface $zeroTermsQuery)
+    public function zeroTermsQuery(ZeroTermsQueryInterface $zeroTermsQuery): self
     {
         $this->zeroTermsQuery = $zeroTermsQuery;
         return $this;
@@ -96,9 +96,9 @@ final class Match implements QueryInterface
      * @param float|int $cutoffFrequency
      * @return Match
      */
-    public function cutoffFrequency($cutoffFrequency)
+    public function cutoffFrequency(float $cutoffFrequency): self
     {
-        $this->cutoffFrequency = floatval($cutoffFrequency);
+        $this->cutoffFrequency = $cutoffFrequency;
         return $this;
     }
 
@@ -106,7 +106,7 @@ final class Match implements QueryInterface
      * @param bool $autoGenerateSynonymsPhraseQuery
      * @return Match
      */
-    public function autoGenerateSynonymsPhraseQuery($autoGenerateSynonymsPhraseQuery)
+    public function autoGenerateSynonymsPhraseQuery(bool $autoGenerateSynonymsPhraseQuery): self
     {
         $this->autoGenerateSynonymsPhraseQuery = boolval($autoGenerateSynonymsPhraseQuery);
         return $this;
@@ -117,7 +117,7 @@ final class Match implements QueryInterface
      *
      * @return array
      */
-    public function toValue()
+    public function toValue(): array
     {
         if ($this->autoGenerateSynonymsPhraseQuery !== null ||
             $this->cutoffFrequency !== null ||

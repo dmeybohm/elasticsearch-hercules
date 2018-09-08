@@ -1,8 +1,7 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Best\ElasticSearch\Hercules\Type;
 
-use Best\ElasticSearch\Hercules\Convert;
 use Best\ElasticSearch\Hercules\TypeInterfaces\MinimumShouldMatchCombinationInterface;
 use Best\ElasticSearch\Hercules\TypeInterfaces\MinimumShouldMatchInterface;
 use Best\ElasticSearch\Hercules\TypeInterfaces\MinimumShouldMatchMultipleCombinationsInterface;
@@ -25,10 +24,10 @@ class MinimumShouldMatch implements MinimumShouldMatchInterface
      * @param integer $integer
      * @return static
      */
-    public static function numberOfTerms($integer)
+    public static function numberOfTerms(int $integer)
     {
         $result = new static();
-        $result->numberOfTerms = Convert::toInteger($integer);
+        $result->numberOfTerms = $integer;
         return $result;
     }
 
@@ -38,11 +37,11 @@ class MinimumShouldMatch implements MinimumShouldMatchInterface
      * @var float $percentage A float value between 0 and 100.
      * @return static
      */
-    public static function percentage($percentage)
+    public static function percentage(float $percentage)
     {
         $result = new static();
         $errorMessage = "Percentage must be between -100 and 100; got '{percentage}'";
-        $result->percentage = Convert::toFloat($percentage);
+        $result->percentage = $percentage;
         if ($result->percentage < -100.0 || $result->percentage > 100.0) {
             throw new \InvalidArgumentException($errorMessage);
         }
@@ -57,7 +56,7 @@ class MinimumShouldMatch implements MinimumShouldMatchInterface
      *
      * @return MinimumShouldMatchCombination
      */
-    public static function combination($numberOfTerms, $percentage)
+    public static function combination(int $numberOfTerms, float $percentage)
     {
         return MinimumShouldMatchCombination::create($numberOfTerms, $percentage);
     }
@@ -79,7 +78,7 @@ class MinimumShouldMatch implements MinimumShouldMatchInterface
      *
      * @return string
      */
-    public function toValue()
+    public function toValue(): string
     {
         if ($this->percentage !== null) {
             return strval($this->percentage) . '%';

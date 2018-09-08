@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Best\ElasticSearch\Hercules\Queries;
 
@@ -17,12 +17,9 @@ final class MatchAll implements QueryInterface
      * @param float $score
      * @return static
      */
-    public function boost($score)
+    public function boost(float $score)
     {
-		if (!is_numeric($score)) {
-			throw new \InvalidArgumentException("Invalid boost score: '$score'");
-		}
-        $this->score = floatval($score);
+        $this->score = $score;
         return $this;
     }
 
@@ -31,7 +28,7 @@ final class MatchAll implements QueryInterface
      *
      * @return array
      */
-    public function toValue()
+    public function toValue(): array
     {
         $options = ($this->score !== 1.0) ? ['boost' => $this->score] : [];
         return ['match_all' => $options];

@@ -58,8 +58,6 @@ class MinimumShouldMatchTest extends \PHPUnit\Framework\TestCase
         return [
             [-101],
             [101],
-            ['hello'],
-            [[]]
         ];
     }
 
