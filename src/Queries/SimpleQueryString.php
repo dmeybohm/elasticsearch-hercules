@@ -94,7 +94,7 @@ final class SimpleQueryString implements QueryInterface
      * @param string[] $fields
      * @return static
      */
-    public function fields(string ...$fields)
+    public function fields(string ...$fields): self
     {
         $this->fields = array_map('strval', $fields);
         return $this;
@@ -104,7 +104,7 @@ final class SimpleQueryString implements QueryInterface
      * @param bool|null $lowercaseExpandedTerms
      * @return static
      */
-    public function lowercaseExpandedTerms(?bool $lowercaseExpandedTerms)
+    public function lowercaseExpandedTerms(?bool $lowercaseExpandedTerms): self
     {
         $this->lowercaseExpandedTerms = $lowercaseExpandedTerms;
         return $this;
@@ -115,7 +115,7 @@ final class SimpleQueryString implements QueryInterface
      *
      * @return array
      */
-    public function toValue()
+    public function toValue(): array
     {
         $result = ['query' => $this->query];
         if ($this->flags !== null) {
@@ -150,9 +150,9 @@ final class SimpleQueryString implements QueryInterface
 
     /**
      * @param OperatorInterface|null $defaultOperator
-     * @return SimpleQueryString
+     * @return static
      */
-    public function defaultOperator(?OperatorInterface $defaultOperator)
+    public function defaultOperator(?OperatorInterface $defaultOperator): self
     {
         $this->defaultOperator = $defaultOperator;
         return $this;
@@ -164,7 +164,7 @@ final class SimpleQueryString implements QueryInterface
      * @param bool|null $analyzeWildcard
      * @return static
      */
-    public function analyzeWildcard(?bool $analyzeWildcard)
+    public function analyzeWildcard(?bool $analyzeWildcard): self
     {
         $this->analyzeWildcard = $analyzeWildcard;
         return $this;
@@ -176,7 +176,7 @@ final class SimpleQueryString implements QueryInterface
      * @param MinimumShouldMatchInterface|null $minimumShouldMatch
      * @return static
      */
-    public function minimumShouldMatch(?MinimumShouldMatchInterface $minimumShouldMatch)
+    public function minimumShouldMatch(?MinimumShouldMatchInterface $minimumShouldMatch): self
     {
         $this->minimumShouldMatch = $minimumShouldMatch;
         return $this;
@@ -188,7 +188,7 @@ final class SimpleQueryString implements QueryInterface
      * @param string|null $locale
      * @return static
      */
-    public function locale(?string $locale)
+    public function locale(?string $locale): self
     {
         $this->locale = $locale;
         return $this;

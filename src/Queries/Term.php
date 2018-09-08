@@ -39,7 +39,7 @@ final class Term implements QueryInterface
      * @param float|null $boost
      * @return static
      */
-    public function boost(?float $boost)
+    public function boost(?float $boost): self
     {
         $this->boost = $boost;
         return $this;
@@ -50,7 +50,7 @@ final class Term implements QueryInterface
      *
      * @return array
      */
-    public function toValue()
+    public function toValue(): array
     {
         if ($this->boost !== null) {
             return [
