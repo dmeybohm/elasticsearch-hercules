@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Best\ElasticSearch\Hercules\Queries;
 
@@ -11,7 +11,7 @@ final class MatchNone implements QueryInterface
      *
      * @return array
      */
-    public function toValue()
+    public function toValue(): array
     {
         return ['match_none' => []];
     }

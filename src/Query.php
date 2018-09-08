@@ -1,6 +1,6 @@
-<?php
+<?php declare(strict_types=1);
 
-namespace Best\ElasticSearch\Hercules\Type;
+namespace Best\ElasticSearch\Hercules;
 
 use Best\ElasticSearch\Hercules\Queries;
 

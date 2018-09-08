@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Best\ElasticSearch\Hercules\Queries;
 
@@ -50,7 +50,7 @@ final class Match implements QueryInterface
      * @param string $fieldToMatch
      * @param string $matchPhrase
      */
-    public function __construct($fieldToMatch, $matchPhrase)
+    public function __construct(string $fieldToMatch, string $matchPhrase)
     {
         $this->fieldToMatch = strval($fieldToMatch);
         $this->matchPhrase = strval($matchPhrase);
@@ -59,10 +59,10 @@ final class Match implements QueryInterface
     /**
      * Set the fuzziness
      *
-     * @param \Best\ElasticSearch\Hercules\TypeInterfaces\FuzzinessInterface $fuzziness
+     * @param FuzzinessInterface|null $fuzziness
      * @return static
      */
-    public function fuzziness(FuzzinessInterface $fuzziness)
+    public function fuzziness(?FuzzinessInterface $fuzziness): self
     {
         $this->fuzziness = $fuzziness;
         return $this;
@@ -71,10 +71,10 @@ final class Match implements QueryInterface
     /**
      * Set the operator.
      *
-     * @param OperatorInterface $operator
-     * @return $this
+     * @param OperatorInterface|null $operator
+     * @return static
      */
-    public function operator(OperatorInterface $operator)
+    public function operator(?OperatorInterface $operator): self
     {
         $this->operator = $operator;
         return $this;
@@ -83,30 +83,30 @@ final class Match implements QueryInterface
     /**
      * Set the zero terms query option.
      *
-     * @param ZeroTermsQueryInterface $zeroTermsQuery
-     * @return $this
+     * @param ZeroTermsQueryInterface|null $zeroTermsQuery
+     * @return static
      */
-    public function zeroTermsQuery(ZeroTermsQueryInterface $zeroTermsQuery)
+    public function zeroTermsQuery(?ZeroTermsQueryInterface $zeroTermsQuery): self
     {
         $this->zeroTermsQuery = $zeroTermsQuery;
         return $this;
     }
 
     /**
-     * @param float|int $cutoffFrequency
-     * @return Match
+     * @param float|int|null $cutoffFrequency
+     * @return static
      */
-    public function cutoffFrequency($cutoffFrequency)
+    public function cutoffFrequency(?float $cutoffFrequency): self
     {
-        $this->cutoffFrequency = floatval($cutoffFrequency);
+        $this->cutoffFrequency = $cutoffFrequency;
         return $this;
     }
 
     /**
-     * @param bool $autoGenerateSynonymsPhraseQuery
-     * @return Match
+     * @param bool|null $autoGenerateSynonymsPhraseQuery
+     * @return static
      */
-    public function autoGenerateSynonymsPhraseQuery($autoGenerateSynonymsPhraseQuery)
+    public function autoGenerateSynonymsPhraseQuery(?bool $autoGenerateSynonymsPhraseQuery): self
     {
         $this->autoGenerateSynonymsPhraseQuery = boolval($autoGenerateSynonymsPhraseQuery);
         return $this;
@@ -117,7 +117,7 @@ final class Match implements QueryInterface
      *
      * @return array
      */
-    public function toValue()
+    public function toValue(): array
     {
         if ($this->autoGenerateSynonymsPhraseQuery !== null ||
             $this->cutoffFrequency !== null ||

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <phpunit bootstrap="vendor/autoload.php">
     <testsuites>
-        <testsuite>
+        <testsuite name="Hercules Test Suite">
             <directory>test/</directory>
         </testsuite>
     </testsuites>

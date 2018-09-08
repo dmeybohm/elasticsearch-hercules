@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Best\ElasticSearch\Hercules\Queries;
 
@@ -27,10 +27,10 @@ final class Term implements QueryInterface
      * @param string $fieldToMatch
      * @param string $exactTerm
      */
-    public function __construct($fieldToMatch, $exactTerm)
+    public function __construct(string $fieldToMatch, string $exactTerm)
     {
-        $this->fieldToMatch = strval($fieldToMatch);
-        $this->exactTerm = strval($exactTerm);
+        $this->fieldToMatch = $fieldToMatch;
+        $this->exactTerm = $exactTerm;
     }
 
     /**
@@ -39,9 +39,9 @@ final class Term implements QueryInterface
      * @param float|null $boost
      * @return static
      */
-    public function boost($boost)
+    public function boost(?float $boost): self
     {
-        $this->boost = $boost !== null ? floatval($boost) : $boost;
+        $this->boost = $boost;
         return $this;
     }
 
@@ -50,7 +50,7 @@ final class Term implements QueryInterface
      *
      * @return array
      */
-    public function toValue()
+    public function toValue(): array
     {
         if ($this->boost !== null) {
             return [

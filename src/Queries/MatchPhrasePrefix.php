@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Best\ElasticSearch\Hercules\Queries;
 
@@ -15,7 +15,7 @@ final class MatchPhrasePrefix implements QueryInterface
      * @param int|null $maxExpansions
      * @return static
      */
-    public function maxExpansions($maxExpansions)
+    public function maxExpansions(?int $maxExpansions)
     {
         $this->maxExpansions = $maxExpansions;
         return $this;

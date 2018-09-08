@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Best\ElasticSearch\Hercules\Type;
 
@@ -17,7 +17,7 @@ class Flags implements TypeInterface, FlagsInterface
      *
      * @return static
      */
-    public static function create()
+    public static function create(): self
     {
         return new static();
     }
@@ -27,79 +27,79 @@ class Flags implements TypeInterface, FlagsInterface
      *
      * @return static
      */
-    public function addAll()
+    public function addAll(): self
     {
         $this->add("ALL");
         return $this;
     }
 
-    public function addOr()
+    public function addOr(): self
     {
         $this->add("OR");
         return $this;
     }
 
-    public function addAnd()
+    public function addAnd(): self
     {
         $this->add("AND");
         return $this;
     }
 
-    public function addNot()
+    public function addNot(): self
     {
         $this->add("NOT");
         return $this;
     }
 
-    public function addPrefix()
+    public function addPrefix(): self
     {
         $this->add("PREFIX");
         return $this;
     }
 
-    public function addPhrase()
+    public function addPhrase(): self
     {
         $this->add("PHRASE");
         return $this;
     }
 
-    public function addPrecedence()
+    public function addPrecedence(): self
     {
         $this->add("PRECEDENCE");
         return $this;
     }
 
-    public function addEscape()
+    public function addEscape(): self
     {
         $this->add("ESCAPE");
         return $this;
     }
 
-    public function addWhitespace()
+    public function addWhitespace(): self
     {
         $this->add("WHITESPACE");
         return $this;
     }
 
-    public function addFuzzy()
+    public function addFuzzy(): self
     {
         $this->add("FUZZY");
         return $this;
     }
 
-    public function addNear()
+    public function addNear(): self
     {
         $this->add("NEAR");
         return $this;
     }
 
-    public function addSlop()
+    public function addSlop(): self
     {
         $this->add("SLOP");
         return $this;
     }
 
-    public function toValue()
+    public function toValue(): string
     {
         return implode("|", array_keys($this->flags));
     }
@@ -109,7 +109,7 @@ class Flags implements TypeInterface, FlagsInterface
      *
      * @param $string
      */
-    private function add($string)
+    private function add($string): void
     {
         $this->flags[$string] = true;
     }

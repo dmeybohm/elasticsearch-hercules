@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Best\ElasticSearch\Hercules\Type;
 
@@ -14,7 +14,7 @@ class Fuzziness implements FuzzinessInterface
     /**
      * @return static
      */
-    public static function zero()
+    public static function zero(): self
     {
         return new static(0);
     }
@@ -22,7 +22,7 @@ class Fuzziness implements FuzzinessInterface
     /**
      * @return static
      */
-    public static function one()
+    public static function one(): self
     {
         return new static(1);
     }
@@ -30,7 +30,7 @@ class Fuzziness implements FuzzinessInterface
     /**
      * @return static
      */
-    public static function two()
+    public static function two(): self
     {
         return new static(2);
     }
@@ -38,7 +38,7 @@ class Fuzziness implements FuzzinessInterface
     /**
      * @return static
      */
-    public static function auto()
+    public static function auto(): self
     {
         return new static('AUTO');
     }

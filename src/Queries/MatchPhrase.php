@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Best\ElasticSearch\Hercules\Queries;
 
@@ -31,7 +31,7 @@ final class MatchPhrase implements QueryInterface
      * @param AnalyzerInterface $analyzer
      * @return MatchPhrase
      */
-    public function analyzer(AnalyzerInterface $analyzer)
+    public function analyzer(AnalyzerInterface $analyzer): self
     {
         $this->analyzer = $analyzer;
         return $this;

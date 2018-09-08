@@ -3,7 +3,7 @@
 namespace Best\ElasticSearch\Hercules\Test;
 
 use Best\ElasticSearch\Hercules\Builder;
-use Best\ElasticSearch\Hercules\Type\Query;
+use Best\ElasticSearch\Hercules\Query;
 use Best\ElasticSearch\Hercules\Type\Fuzziness;
 use Best\ElasticSearch\Hercules\Type\Operator;
 use Best\ElasticSearch\Hercules\Type\ZeroTermsQuery;
