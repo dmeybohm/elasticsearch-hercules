@@ -4,27 +4,27 @@ namespace Best\ElasticSearch\Hercules;
 
 use Best\ElasticSearch\Hercules\TypeInterfaces\QueryInterface;
 
-class Builder implements \JsonSerializable
+final class Builder implements \JsonSerializable
 {
 	/**
 	 * @var QueryInterface[]
 	 */
-	protected $andQueries = [];
+	private $andQueries = [];
 
 	/**
 	 * @var QueryInterface[]
 	 */
-	protected $orQueries = [];
+	private $orQueries = [];
 
 	/**
 	 * @var QueryInterface[]
 	 */
-	protected $notQueries = [];
+	private $notQueries = [];
 
 	/**
 	 * @var Filter[]
 	 */
-	protected $filters = [];
+	private $filters = [];
 
 	/**
 	 * Create a new builder.
