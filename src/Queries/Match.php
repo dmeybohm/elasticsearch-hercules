@@ -59,10 +59,10 @@ final class Match implements QueryInterface
     /**
      * Set the fuzziness
      *
-     * @param \Best\ElasticSearch\Hercules\TypeInterfaces\FuzzinessInterface $fuzziness
+     * @param FuzzinessInterface|null $fuzziness
      * @return static
      */
-    public function fuzziness(FuzzinessInterface $fuzziness): self
+    public function fuzziness(?FuzzinessInterface $fuzziness): self
     {
         $this->fuzziness = $fuzziness;
         return $this;
@@ -71,10 +71,10 @@ final class Match implements QueryInterface
     /**
      * Set the operator.
      *
-     * @param OperatorInterface $operator
-     * @return $this
+     * @param OperatorInterface|null $operator
+     * @return static
      */
-    public function operator(OperatorInterface $operator): self
+    public function operator(?OperatorInterface $operator): self
     {
         $this->operator = $operator;
         return $this;
@@ -83,30 +83,30 @@ final class Match implements QueryInterface
     /**
      * Set the zero terms query option.
      *
-     * @param ZeroTermsQueryInterface $zeroTermsQuery
-     * @return $this
+     * @param ZeroTermsQueryInterface|null $zeroTermsQuery
+     * @return static
      */
-    public function zeroTermsQuery(ZeroTermsQueryInterface $zeroTermsQuery): self
+    public function zeroTermsQuery(?ZeroTermsQueryInterface $zeroTermsQuery): self
     {
         $this->zeroTermsQuery = $zeroTermsQuery;
         return $this;
     }
 
     /**
-     * @param float|int $cutoffFrequency
-     * @return Match
+     * @param float|int|null $cutoffFrequency
+     * @return static
      */
-    public function cutoffFrequency(float $cutoffFrequency): self
+    public function cutoffFrequency(?float $cutoffFrequency): self
     {
         $this->cutoffFrequency = $cutoffFrequency;
         return $this;
     }
 
     /**
-     * @param bool $autoGenerateSynonymsPhraseQuery
-     * @return Match
+     * @param bool|null $autoGenerateSynonymsPhraseQuery
+     * @return static
      */
-    public function autoGenerateSynonymsPhraseQuery(bool $autoGenerateSynonymsPhraseQuery): self
+    public function autoGenerateSynonymsPhraseQuery(?bool $autoGenerateSynonymsPhraseQuery): self
     {
         $this->autoGenerateSynonymsPhraseQuery = boolval($autoGenerateSynonymsPhraseQuery);
         return $this;
