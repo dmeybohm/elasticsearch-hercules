@@ -12,33 +12,31 @@ class BuilderTest extends \PHPUnit\Framework\TestCase
 {
     public function testCreate()
     {
-        $instance = new Builder();
-        $this->assertInstanceOf(Builder::class, $instance);
         $instance = Builder::create();
         $this->assertInstanceOf(Builder::class, $instance);
     }
 
     public function testBuildMatchAll()
     {
-        $builder = new Builder();
+        $builder = Builder::create();
         $builder->query(Query::matchAll());
         $this->assertEquals(['query' => ['match_all' => []]], $builder->build());
 
-        $builder2 = new Builder();
+        $builder2 = Builder::create();
         $builder2->query(Query::matchAll()->boost(1.001));
         $this->assertEquals(['query' => ['match_all' => ['boost' => 1.001]]], $builder2->build());
     }
 
     public function testBuildMatchNone()
     {
-        $builder = new Builder();
+        $builder = Builder::create();
         $builder->query(Query::matchNone());
         $this->assertEquals(['query' => ['match_none' => []]], $builder->build());
     }
 
     public function testMatch()
     {
-        $builder = new Builder();
+        $builder = Builder::create();
         $builder->query(Query::match("field", "match phrase"));
         $this->assertEquals(['query' => ['match' => ['field' => 'match phrase']]], $builder->build());
 
