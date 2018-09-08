@@ -2,11 +2,12 @@
 
 namespace Best\ElasticSearch\Hercules\Type;
 
-use Best\ElasticSearch\Hercules\Traits\StringableTrait;
+use Best\ElasticSearch\Hercules\Traits\ValueConvertibleTrait;
+use Best\ElasticSearch\Hercules\TypeInterfaces\ZeroTermsQueryInterface;
 
-class ZeroTermsQuery implements TypeInterface
+class ZeroTermsQuery implements ZeroTermsQueryInterface
 {
-    use StringableTrait;
+    use ValueConvertibleTrait;
 
     /**
      * Get the all option.

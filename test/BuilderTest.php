@@ -61,7 +61,8 @@ class BuilderTest extends \PHPUnit\Framework\TestCase
                         'cutoff_frequency' => 1.5,
                         'auto_generate_synonyms_phrase_query' => false,
                         'zero_terms_query' => 'all',
-                        'operator' => 'or'
+                        'operator' => 'or',
+                        'fuzziness' => 'AUTO'
                     ]
                 ]
             ]

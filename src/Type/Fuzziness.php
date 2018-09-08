@@ -2,9 +2,14 @@
 
 namespace Best\ElasticSearch\Hercules\Type;
 
-class Fuzziness implements TypeInterface
+use Best\ElasticSearch\Hercules\TypeInterfaces\FuzzinessInterface;
+
+class Fuzziness implements FuzzinessInterface
 {
-    protected $fuzziness;
+    /**
+     * @var int|string
+     */
+    private $fuzziness;
 
     /**
      * @return static
@@ -35,7 +40,17 @@ class Fuzziness implements TypeInterface
      */
     public static function auto()
     {
-        return new static('auto');
+        return new static('AUTO');
+    }
+
+    /**
+     * Convert to a string.
+     *
+     * @return int|string
+     */
+    public function toValue()
+    {
+        return $this->fuzziness;
     }
 
     /**
@@ -43,7 +58,7 @@ class Fuzziness implements TypeInterface
      *
      * @param integer|string $fuzziness
      */
-    protected function __construct($fuzziness)
+    private function __construct($fuzziness)
     {
         $this->fuzziness = $fuzziness;
     }

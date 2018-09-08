@@ -2,11 +2,13 @@
 
 namespace Best\ElasticSearch\Hercules\Type;
 
-use Best\ElasticSearch\Hercules\Traits\StringableTrait;
+use Best\ElasticSearch\Hercules\Traits\ValueConvertibleTrait;
+use Best\ElasticSearch\Hercules\TypeInterfaces\AnalyzerInterface;
+use Best\ElasticSearch\Hercules\TypeInterfaces\TypeInterface;
 
-class Analyzer implements TypeInterface
+class Analyzer implements TypeInterface, AnalyzerInterface
 {
-    use StringableTrait;
+    use ValueConvertibleTrait;
 
     public static function standard()
     {
@@ -15,6 +17,6 @@ class Analyzer implements TypeInterface
 
     public static function custom($customName)
     {
-        return new static($customName);
+        return new static(strval($customName));
     }
 }

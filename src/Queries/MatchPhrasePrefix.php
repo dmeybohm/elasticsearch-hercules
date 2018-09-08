@@ -2,14 +2,14 @@
 
 namespace Best\ElasticSearch\Hercules\Queries;
 
-use Best\ElasticSearch\Hercules\Type\QueryInterface;
+use Best\ElasticSearch\Hercules\TypeInterfaces\QueryInterface;
 
-class MatchPhrasePrefix implements QueryInterface
+final class MatchPhrasePrefix implements QueryInterface
 {
     /**
      * @var integer|null
      */
-    protected $maxExpansions = null;
+    private $maxExpansions = null;
 
     /**
      * @param int|null $maxExpansions
@@ -21,7 +21,7 @@ class MatchPhrasePrefix implements QueryInterface
         return $this;
     }
 
-    public function toArray()
+    public function toValue()
     {
         // TODO: Implement toArray() method.
         return [];

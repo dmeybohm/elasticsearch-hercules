@@ -2,12 +2,13 @@
 
 namespace Best\ElasticSearch\Hercules\Type;
 
-use Best\ElasticSearch\Hercules\Traits\StringableTrait;
+use Best\ElasticSearch\Hercules\Traits\ValueConvertibleTrait;
+use Best\ElasticSearch\Hercules\TypeInterfaces\MultiMatchTypeInterface;
 
-class MultiMatchType implements TypeInterface
+class MultiMatchType implements MultiMatchTypeInterface
 {
-    use StringableTrait;
-    
+    use ValueConvertibleTrait;
+
     /**
      * Return a best_fields multi match type
      *
@@ -17,7 +18,7 @@ class MultiMatchType implements TypeInterface
     {
         return new static('best_fields');
     }
-    
+
     /**
      * Return a most_fields multi match type
      *

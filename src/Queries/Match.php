@@ -2,47 +2,47 @@
 
 namespace Best\ElasticSearch\Hercules\Queries;
 
-use Best\ElasticSearch\Hercules\Type\QueryInterface;
-use Best\ElasticSearch\Hercules\Type\Fuzziness;
-use Best\ElasticSearch\Hercules\Type\Operator;
-use Best\ElasticSearch\Hercules\Type\ZeroTermsQuery;
+use Best\ElasticSearch\Hercules\TypeInterfaces\OperatorInterface;
+use Best\ElasticSearch\Hercules\TypeInterfaces\FuzzinessInterface;
+use Best\ElasticSearch\Hercules\TypeInterfaces\QueryInterface;
+use Best\ElasticSearch\Hercules\TypeInterfaces\ZeroTermsQueryInterface;
 
-class Match implements QueryInterface
+final class Match implements QueryInterface
 {
     /**
-     * @var Fuzziness|null
+     * @var FuzzinessInterface|null
      */
-    protected $fuzziness;
+    private $fuzziness;
 
     /**
-     * @var Operator|null
+     * @var OperatorInterface|null
      */
-    protected $operator;
+    private $operator;
 
     /**
-     * @var ZeroTermsQuery|null
+     * @var ZeroTermsQueryInterface|null
      */
-    protected $zeroTermsQuery;
+    private $zeroTermsQuery;
 
     /**
      * @var integer|float|null
      */
-    protected $cutoffFrequency;
+    private $cutoffFrequency;
 
     /**
      * @var boolean|null
      */
-    protected $autoGenerateSynonymsPhraseQuery = null;
+    private $autoGenerateSynonymsPhraseQuery = null;
 
     /**
      * @var string
      */
-    protected $fieldToMatch;
+    private $fieldToMatch;
 
     /**
      * @var string
      */
-    protected $matchPhrase;
+    private $matchPhrase;
 
     /**
      * Match constructor.
@@ -59,10 +59,10 @@ class Match implements QueryInterface
     /**
      * Set the fuzziness
      *
-     * @param Fuzziness $fuzziness
-     * @return $this
+     * @param \Best\ElasticSearch\Hercules\TypeInterfaces\FuzzinessInterface $fuzziness
+     * @return static
      */
-    public function fuzziness(Fuzziness $fuzziness)
+    public function fuzziness(FuzzinessInterface $fuzziness)
     {
         $this->fuzziness = $fuzziness;
         return $this;
@@ -71,10 +71,10 @@ class Match implements QueryInterface
     /**
      * Set the operator.
      *
-     * @param Operator $operator
+     * @param OperatorInterface $operator
      * @return $this
      */
-    public function operator(Operator $operator)
+    public function operator(OperatorInterface $operator)
     {
         $this->operator = $operator;
         return $this;
@@ -83,10 +83,10 @@ class Match implements QueryInterface
     /**
      * Set the zero terms query option.
      *
-     * @param ZeroTermsQuery $zeroTermsQuery
+     * @param ZeroTermsQueryInterface $zeroTermsQuery
      * @return $this
      */
-    public function zeroTermsQuery(ZeroTermsQuery $zeroTermsQuery)
+    public function zeroTermsQuery(ZeroTermsQueryInterface $zeroTermsQuery)
     {
         $this->zeroTermsQuery = $zeroTermsQuery;
         return $this;
@@ -117,12 +117,13 @@ class Match implements QueryInterface
      *
      * @return array
      */
-    public function toArray()
+    public function toValue()
     {
         if ($this->autoGenerateSynonymsPhraseQuery !== null ||
             $this->cutoffFrequency !== null ||
             $this->zeroTermsQuery !== null ||
-            $this->operator !== null
+            $this->operator !== null ||
+            $this->fuzziness !== null
         ) {
             $fields = [
                 'query' => $this->matchPhrase
@@ -133,11 +134,14 @@ class Match implements QueryInterface
             if ($this->cutoffFrequency !== null) {
                 $fields['cutoff_frequency'] = $this->cutoffFrequency;
             }
+            if ($this->fuzziness !== null) {
+                $fields['fuzziness'] = $this->fuzziness->toValue();
+            }
             if ($this->zeroTermsQuery !== null) {
-                $fields['zero_terms_query'] = strval($this->zeroTermsQuery);
+                $fields['zero_terms_query'] = $this->zeroTermsQuery->toValue();
             }
             if ($this->operator !== null) {
-                $fields['operator'] = strval($this->operator);
+                $fields['operator'] = $this->operator->toValue();
             }
 
             return [
