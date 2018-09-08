@@ -16,10 +16,10 @@ abstract class Query
      *
      * @param string $fieldToMatch
      * @param string $matchPhrase
-
+     *
      * @return \Best\ElasticSearch\Hercules\Queries\Match
      */
-    public static function match($fieldToMatch, $matchPhrase)
+    public static function match($fieldToMatch, $matchPhrase): Queries\Match
     {
         return new Queries\Match($fieldToMatch, $matchPhrase);
     }
@@ -29,7 +29,7 @@ abstract class Query
      *
      * @return \Best\ElasticSearch\Hercules\Queries\MatchAll
      */
-    public static function matchAll()
+    public static function matchAll(): Queries\MatchAll
     {
         return new Queries\MatchAll();
     }
@@ -39,7 +39,7 @@ abstract class Query
      *
      * @return \Best\ElasticSearch\Hercules\Queries\MatchNone
      */
-    public static function matchNone()
+    public static function matchNone(): Queries\MatchNone
     {
         return new Queries\MatchNone();
     }
@@ -51,18 +51,18 @@ abstract class Query
      *
      * @return \Best\ElasticSearch\Hercules\Queries\MultiMatch
      */
-    public static function multiMatch($query)
+    public static function multiMatch($query): Queries\MultiMatch
     {
         return new Queries\MultiMatch($query);
     }
 
-    public static function matchPhrase()
+    public static function matchPhrase(): Queries\MatchPhrase
     {
         // @todo
         return new Queries\MatchPhrase();
     }
 
-    public static function matchPhrasePrefix()
+    public static function matchPhrasePrefix(): Queries\MatchPhrasePrefix
     {
         // @todo
         return new Queries\MatchPhrasePrefix();
@@ -75,7 +75,7 @@ abstract class Query
      *
      * @return \Best\ElasticSearch\Hercules\Queries\SimpleQueryString
      */
-    public static function simpleQueryString($query)
+    public static function simpleQueryString($query): Queries\SimpleQueryString
     {
         return new Queries\SimpleQueryString($query);
     }
@@ -88,7 +88,7 @@ abstract class Query
      *
      * @return \Best\ElasticSearch\Hercules\Queries\Term
      */
-    public static function term($fieldToMatch, $exactTerm)
+    public static function term($fieldToMatch, $exactTerm): Queries\Term
     {
         return new Queries\Term($fieldToMatch, $exactTerm);
     }
