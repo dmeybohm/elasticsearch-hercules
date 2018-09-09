@@ -18,6 +18,4 @@ final class CompoundBool implements QueryInterface
     {
         return $this->booleanQueryToArray();
     }
-
-
 }
