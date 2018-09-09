@@ -6,7 +6,7 @@ use Best\ElasticSearch\Hercules\Traits\BooleanQueryTrait;
 
 final class QueryBuilder implements \JsonSerializable
 {
-    use BooleanQueryTrait;
+	use BooleanQueryTrait;
 
 	/**
 	 * Create a new builder.
@@ -18,12 +18,12 @@ final class QueryBuilder implements \JsonSerializable
 		return new static();
 	}
 
-    /**
-     * Builder constructor.
-     */
-    private function __construct()
-    {
-    }
+	/**
+	 * Builder constructor.
+	 */
+	private function __construct()
+	{
+	}
 
 	/**
 	 * Build the JSON
@@ -37,26 +37,26 @@ final class QueryBuilder implements \JsonSerializable
 		$filterCount = count($this->filters);
 		$exclusionCount = count($this->notQueries);
 
-        if ($andQueryCount === 1 && $orQueryCount === 0 && $filterCount === 0 && $exclusionCount === 0) {
-            return ['query' => $this->andQueries[0]->toValue()];
+		if ($andQueryCount === 1 && $orQueryCount === 0 && $filterCount === 0 && $exclusionCount === 0) {
+			return ['query' => $this->andQueries[0]->toValue()];
 
-        }
-        elseif ($andQueryCount === 0 && $orQueryCount === 1 && $filterCount === 0 && $exclusionCount === 0) {
-            return ['query' => $this->orQueries[0]->toValue()];
+		}
+		elseif ($andQueryCount === 0 && $orQueryCount === 1 && $filterCount === 0 && $exclusionCount === 0) {
+			return ['query' => $this->orQueries[0]->toValue()];
 
-        }
-        elseif (
-            $filterCount === 1 &&
-            $andQueryCount === 0 &&
-            $orQueryCount == 0 &&
-            $exclusionCount === 0
-        ) {
-            // @todo
-            return [];
-        }
-        else {
-            return ['query' => $this->booleanQueryToArray()];
-        }
+		}
+		elseif (
+			$filterCount === 1 &&
+			$andQueryCount === 0 &&
+			$orQueryCount == 0 &&
+			$exclusionCount === 0
+		) {
+			// @todo
+			return [];
+		}
+		else {
+			return ['query' => $this->booleanQueryToArray()];
+		}
 	}
 
 	/**
