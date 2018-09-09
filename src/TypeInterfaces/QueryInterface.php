@@ -9,5 +9,5 @@ interface QueryInterface extends TypeInterface
      *
      * @return array
      */
-    public function toValue();
+    public function toValue(): array;
 }

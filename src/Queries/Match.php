@@ -93,22 +93,22 @@ final class Match implements QueryInterface
     }
 
     /**
-     * @param float|int|null $cutoffFrequency
+     * @param float|int $cutoffFrequency
      * @return static
      */
-    public function cutoffFrequency(?float $cutoffFrequency): self
+    public function cutoffFrequency(float $cutoffFrequency): self
     {
         $this->cutoffFrequency = $cutoffFrequency;
         return $this;
     }
 
     /**
-     * @param bool|null $autoGenerateSynonymsPhraseQuery
+     * @param bool $autoGenerateSynonymsPhraseQuery
      * @return static
      */
-    public function autoGenerateSynonymsPhraseQuery(?bool $autoGenerateSynonymsPhraseQuery): self
+    public function autoGenerateSynonymsPhraseQuery(bool $autoGenerateSynonymsPhraseQuery): self
     {
-        $this->autoGenerateSynonymsPhraseQuery = boolval($autoGenerateSynonymsPhraseQuery);
+        $this->autoGenerateSynonymsPhraseQuery = $autoGenerateSynonymsPhraseQuery;
         return $this;
     }
 
@@ -149,8 +149,8 @@ final class Match implements QueryInterface
                     $this->fieldToMatch => $fields
                 ]
             ];
-
-        } else {
+        }
+        else {
             return [
                 'match' => [
                     $this->fieldToMatch => $this->matchPhrase

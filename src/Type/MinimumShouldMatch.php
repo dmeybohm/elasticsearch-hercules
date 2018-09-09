@@ -76,15 +76,15 @@ class MinimumShouldMatch implements MinimumShouldMatchInterface
     /**
      * Convert the MinimumShouldMatch to a string.
      *
-     * @return string
+     * @return string|int
      */
-    public function toValue(): string
+    public function toValue()
     {
         if ($this->percentage !== null) {
             return strval($this->percentage) . '%';
 
         } elseif ($this->numberOfTerms !== null) {
-            return strval($this->numberOfTerms);
+            return $this->numberOfTerms;
 
         } else {
             throw new \RuntimeException("Invalid type of MinimumShouldMatch");
