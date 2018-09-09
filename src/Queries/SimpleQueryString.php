@@ -69,6 +69,13 @@ final class SimpleQueryString implements QueryInterface
     private $minimumShouldMatch;
 
     /**
+     * Quote field suffix.
+     *
+     * @var string|null
+     */
+    private $quoteFieldSuffix;
+
+    /**
      * Set the flags.
      *
      * @param FlagsInterface|null $flags
@@ -101,10 +108,10 @@ final class SimpleQueryString implements QueryInterface
     }
 
     /**
-     * @param bool|null $lowercaseExpandedTerms
+     * @param bool $lowercaseExpandedTerms
      * @return static
      */
-    public function lowercaseExpandedTerms(?bool $lowercaseExpandedTerms): self
+    public function lowercaseExpandedTerms(bool $lowercaseExpandedTerms): self
     {
         $this->lowercaseExpandedTerms = $lowercaseExpandedTerms;
         return $this;
@@ -145,14 +152,19 @@ final class SimpleQueryString implements QueryInterface
         if ($this->lenient !== null) {
             $result['lenient'] = $this->lenient;
         }
+        if ($this->quoteFieldSuffix !== null) {
+            $result['quote_field_suffix'] = $this->quoteFieldSuffix;
+        }
         return ['simple_query_string' => $result];
     }
 
     /**
-     * @param OperatorInterface|null $defaultOperator
+     * Set the default operator for the query.
+     *
+     * @param OperatorInterface $defaultOperator
      * @return static
      */
-    public function defaultOperator(?OperatorInterface $defaultOperator): self
+    public function defaultOperator(OperatorInterface $defaultOperator): self
     {
         $this->defaultOperator = $defaultOperator;
         return $this;
@@ -161,10 +173,10 @@ final class SimpleQueryString implements QueryInterface
     /**
      * Whether the terms of prefix queries will be automatically analyzed.
      *
-     * @param bool|null $analyzeWildcard
+     * @param bool $analyzeWildcard
      * @return static
      */
-    public function analyzeWildcard(?bool $analyzeWildcard): self
+    public function analyzeWildcard(bool $analyzeWildcard): self
     {
         $this->analyzeWildcard = $analyzeWildcard;
         return $this;
@@ -173,10 +185,10 @@ final class SimpleQueryString implements QueryInterface
     /**
      * Set the minimumShouldMatch.
      *
-     * @param MinimumShouldMatchInterface|null $minimumShouldMatch
+     * @param MinimumShouldMatchInterface $minimumShouldMatch
      * @return static
      */
-    public function minimumShouldMatch(?MinimumShouldMatchInterface $minimumShouldMatch): self
+    public function minimumShouldMatch(MinimumShouldMatchInterface $minimumShouldMatch): self
     {
         $this->minimumShouldMatch = $minimumShouldMatch;
         return $this;
@@ -188,7 +200,7 @@ final class SimpleQueryString implements QueryInterface
      * @param string|null $locale
      * @return static
      */
-    public function locale(?string $locale): self
+    public function locale(string $locale): self
     {
         $this->locale = $locale;
         return $this;
@@ -197,10 +209,10 @@ final class SimpleQueryString implements QueryInterface
     /**
      * Set the analyzer.
      *
-     * @param AnalyzerInterface|null $analyzer
+     * @param AnalyzerInterface $analyzer
      * @return static
      */
-    public function analyzer(?AnalyzerInterface $analyzer): self
+    public function analyzer(AnalyzerInterface $analyzer): self
     {
         $this->analyzer = $analyzer;
         return $this;
@@ -212,9 +224,21 @@ final class SimpleQueryString implements QueryInterface
      * @param bool|null $lenient
      * @return static
      */
-    public function lenient(?bool $lenient): self
+    public function lenient(bool $lenient): self
     {
         $this->lenient = $lenient;
+        return $this;
+    }
+
+    /**
+     * Set the quote field suffix.
+     *
+     * @param string $quoteFieldSuffix
+     * @return static
+     */
+    public function quoteFieldSuffix(string $quoteFieldSuffix): self
+    {
+        $this->quoteFieldSuffix = $quoteFieldSuffix;
         return $this;
     }
 

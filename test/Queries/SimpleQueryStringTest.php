@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Best\Test\ElasticSearch\Hercules\Queries;
 
@@ -26,7 +26,6 @@ class SimpleQueryStringTest extends \PHPUnit\Framework\TestCase
         ];
         $this->assertEquals($expected, $query->toValue());
     }
-
 
     public function testAllOptions()
     {

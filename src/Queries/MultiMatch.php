@@ -46,7 +46,7 @@ final class MultiMatch implements QueryInterface
      *
      * @return array
      */
-    public function toValue()
+    public function toValue(): array
     {
         $result = [
             'query' => $this->query
@@ -80,10 +80,10 @@ final class MultiMatch implements QueryInterface
     /**
      * Set the tie breaker.
      *
-     * @param float|null $tieBreaker
+     * @param float $tieBreaker
      * @return static
      */
-    public function tieBreaker(?float $tieBreaker)
+    public function tieBreaker(float $tieBreaker)
     {
         $this->tieBreaker = $tieBreaker;
         return $this;
@@ -92,10 +92,10 @@ final class MultiMatch implements QueryInterface
     /**
      * Set the type.
      *
-     * @param MultiMatchTypeInterface|null $type
+     * @param MultiMatchTypeInterface $type
      * @return static
      */
-    public function type(?MultiMatchTypeInterface $type)
+    public function type(MultiMatchTypeInterface $type)
     {
         $this->type = $type;
         return $this;

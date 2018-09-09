@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Best\ElasticSearch\Hercules\Test\Type;
 
@@ -11,7 +11,7 @@ class MinimumShouldMatchTest extends \PHPUnit\Framework\TestCase
     public function testNumberOfTerms()
     {
         $msm = MinimumShouldMatch::numberOfTerms(10);
-        $this->assertSame('10', $msm->toValue());
+        $this->assertSame(10, $msm->toValue());
     }
 
     public function testPercentage()

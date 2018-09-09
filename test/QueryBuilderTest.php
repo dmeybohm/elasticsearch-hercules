@@ -1,46 +1,46 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Best\ElasticSearch\Hercules\Test;
 
-use Best\ElasticSearch\Hercules\Builder;
+use Best\ElasticSearch\Hercules\QueryBuilder;
 use Best\ElasticSearch\Hercules\Query;
 use Best\ElasticSearch\Hercules\Type\Fuzziness;
 use Best\ElasticSearch\Hercules\Type\Operator;
 use Best\ElasticSearch\Hercules\Type\ZeroTermsQuery;
 
-class BuilderTest extends \PHPUnit\Framework\TestCase
+class QueryBuilderTest extends \PHPUnit\Framework\TestCase
 {
     public function testCreate()
     {
-        $instance = Builder::create();
-        $this->assertInstanceOf(Builder::class, $instance);
+        $instance = QueryBuilder::create();
+        $this->assertInstanceOf(QueryBuilder::class, $instance);
     }
 
     public function testBuildMatchAll()
     {
-        $builder = Builder::create();
+        $builder = QueryBuilder::create();
         $builder->query(Query::matchAll());
         $this->assertEquals(['query' => ['match_all' => []]], $builder->build());
 
-        $builder2 = Builder::create();
+        $builder2 = QueryBuilder::create();
         $builder2->query(Query::matchAll()->boost(1.001));
         $this->assertEquals(['query' => ['match_all' => ['boost' => 1.001]]], $builder2->build());
     }
 
     public function testBuildMatchNone()
     {
-        $builder = Builder::create();
+        $builder = QueryBuilder::create();
         $builder->query(Query::matchNone());
         $this->assertEquals(['query' => ['match_none' => []]], $builder->build());
     }
 
     public function testMatch()
     {
-        $builder = Builder::create();
+        $builder = QueryBuilder::create();
         $builder->query(Query::match("field", "match phrase"));
         $this->assertEquals(['query' => ['match' => ['field' => 'match phrase']]], $builder->build());
 
-        $result = Builder::create()
+        $result = QueryBuilder::create()
             ->query(
                 Query::match('field2', 'match phrase2')
                     ->cutoffFrequency(1.5)
@@ -70,7 +70,7 @@ class BuilderTest extends \PHPUnit\Framework\TestCase
 
     public function testCombiningQueries()
     {
-        $builder = Builder::create()
+        $builder = QueryBuilder::create()
             ->query(Query::match('hello', 'goodbye'))
             ->query(Query::term('field1', 'value1'))
             ->query(Query::term('field2', 'value2'));
@@ -87,7 +87,7 @@ class BuilderTest extends \PHPUnit\Framework\TestCase
             ]
         ], $builder->build());
 
-        $result = Builder::create()
+        $result = QueryBuilder::create()
            ->andQuery(
                Query::match('hello', 'goodbye'),
                Query::matchAll()
@@ -119,7 +119,7 @@ class BuilderTest extends \PHPUnit\Framework\TestCase
 
     public function testBuilderCanBeSerializedToJson()
     {
-        $builder = Builder::create()
+        $builder = QueryBuilder::create()
             ->andQuery(
                 Query::match('hello', 'goodbye'),
                 Query::matchAll()
@@ -150,7 +150,7 @@ class BuilderTest extends \PHPUnit\Framework\TestCase
 
     public function testSimpleQuery()
     {
-        $result = Builder::create()
+        $result = QueryBuilder::create()
             ->query(Query::simpleQueryString('hello query string'))
             ->build();
         $this->assertEquals(['query' => ['simple_query_string' => ['query' => 'hello query string']]], $result);
@@ -158,7 +158,7 @@ class BuilderTest extends \PHPUnit\Framework\TestCase
 
     public function testNotQuery()
     {
-        $builder = Builder::create()
+        $builder = QueryBuilder::create()
             ->andQuery(
                 Query::match('hello', 'goodbye'),
                 Query::matchAll()
