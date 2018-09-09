@@ -31,18 +31,25 @@ final class Builder implements \JsonSerializable
 	 *
 	 * @return static
 	 */
-	public static function create()
+	public static function create(): self
 	{
 		return new static();
 	}
 
-	/**
+    /**
+     * Builder constructor.
+     */
+    private function __construct()
+    {
+    }
+
+    /**
 	 * Add a query to the builder.
 	 *
 	 * @param QueryInterface ...$queries
 	 * @return static
 	 */
-	public function query(QueryInterface ...$queries)
+	public function query(QueryInterface ...$queries): self
 	{
 		return $this->andQuery(...$queries);
 	}
@@ -53,7 +60,7 @@ final class Builder implements \JsonSerializable
 	 * @param QueryInterface ...$queries
 	 * @return static
 	 */
-	public function orQuery(QueryInterface ...$queries)
+	public function orQuery(QueryInterface ...$queries): self
 	{
 		$this->orQueries = array_merge($this->orQueries, $queries);
 		return $this;
@@ -65,7 +72,7 @@ final class Builder implements \JsonSerializable
 	 * @param QueryInterface ...$queries
 	 * @return static
 	 */
-	public function andQuery(QueryInterface ...$queries)
+	public function andQuery(QueryInterface ...$queries): self
 	{
 		$this->andQueries = array_merge($this->andQueries, $queries);
 		return $this;
@@ -77,7 +84,7 @@ final class Builder implements \JsonSerializable
 	 * @param QueryInterface ...$queries
 	 * @return static
 	 */
-	public function notQuery(QueryInterface ...$queries)
+	public function notQuery(QueryInterface ...$queries): self
 	{
 		$this->notQueries = array_merge($this->notQueries, $queries);
 		return $this;
@@ -88,7 +95,7 @@ final class Builder implements \JsonSerializable
 	 *
 	 * @return array
 	 */
-	public function build()
+	public function build(): array
 	{
 		$andQueryCount = count($this->andQueries);
 		$orQueryCount = count($this->orQueries);
@@ -139,7 +146,7 @@ final class Builder implements \JsonSerializable
 	 * @param QueryInterface[] $queries
 	 * @return array
 	 */
-	private function serializeQueries(array $queries)
+	private function serializeQueries(array $queries): array
 	{
 		$result = [];
 		foreach ($queries as $query) {
